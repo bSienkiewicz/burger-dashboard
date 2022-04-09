@@ -1,5 +1,7 @@
 <template>
-  <div class="d-flex">
+  <!-- <loader-component /> -->
+  <orders-app-component />
+  <div id="app-interface" class="d-flex">
     <SidebarPanel />
     <router-view />
   </div>
@@ -7,18 +9,31 @@
 
 <script>
 import SidebarPanel from "./components/SidebarPanel.vue";
+import OrdersAppComponent from "./components/OrdersAppComponent.vue";
+// import LoaderComponent from "./components/LoaderComponent.vue";
 
 export default {
   components: {
     SidebarPanel,
+    OrdersAppComponent,
+    // LoaderComponent,
   },
   setup() {},
+  mounted() {
+    window.onload = () => {
+      // document.getElementById("LOADER-COMPONENT").classList.add("d-none");
+    };
+  },
 };
 </script>
 
 <style lang="scss">
 * {
   // outline: 2px solid red;
+}
+
+[v-cloak] {
+  display: none;
 }
 
 :root {
@@ -46,6 +61,15 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   font-family: PhysisMedium;
+}
+
+#CONTENT-CONTAINER {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f7f7f7;
+  overflow-y: auto;
 }
 
 nav {

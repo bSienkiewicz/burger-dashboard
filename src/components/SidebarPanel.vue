@@ -31,8 +31,8 @@
       <router-link to="/magazyn"
         ><i class="fa-solid fa-boxes-stacked pe-3"></i>Magazyn</router-link
       >
-      <router-link to="/kiosk"
-        ><i class="fa-solid fa-tv pe-3"></i>Kiosk</router-link
+      <router-link to="/orders"
+        ><i class="fa-solid fa-tv pe-3"></i>Order Panel</router-link
       >
       <h5 class="cat-separator">Category 3</h5>
       <router-link to="/d">Block 5</router-link>
@@ -67,6 +67,7 @@ export default {
   color: #fff;
   display: flex;
   flex-direction: column;
+  z-index: 10 !important;
   @media only screen and (max-width: 1480px) {
     min-width: 120px;
     width: 120px;
