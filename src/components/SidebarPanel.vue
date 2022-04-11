@@ -72,6 +72,8 @@ export default {
     min-width: 120px;
     width: 120px;
   }
+
+  // animation: 1s slide-in-left ease;
 }
 
 .logo-head {
@@ -131,6 +133,15 @@ export default {
   cursor: pointer;
   > * {
     margin: 0;
+  }
+}
+
+@keyframes slide-in-left {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0%);
   }
 }
 </style>

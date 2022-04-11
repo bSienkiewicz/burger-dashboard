@@ -9,8 +9,8 @@
             class="fs-5"
             id="refresh-status"
             v-if="this.stateUpdating && !this.error"
-            ><i class="fa-solid fa-circle-notch spinner"></i> Odświeżanie
-            ...</span
+          >
+            Odświeżanie ...</span
           >
           <span
             style="float: right; cursor: pointer"
@@ -157,10 +157,12 @@
           >
             <div class=""></div>
             <h5 class="fw-bold">
-              Podsumowanie zamówień<span
-                style="float: right; color: var(--basic-red)"
-                class="fs-6"
-                >Wyświetl wszystkie <i class="fa-solid fa-chevron-right"></i
+              Podsumowanie zamówień<span style="float: right" class="fs-6"
+                ><router-link
+                  style="text-decoration: none; color: var(--basic-red)"
+                  to="/zamowienia"
+                  >Wyświetl wszystkie
+                  <i class="fa-solid fa-chevron-right"></i></router-link
               ></span>
             </h5>
             <div class="d-flex justify-content-between py-3">
@@ -351,6 +353,7 @@ export default {
       if (!this.update || localStorage.getItem("filteredData") == null) return;
       this.stateUpdating = true;
       this.updateStateDates();
+      this.showSpinner(true);
       axios
         .get(
           `${this.apiURL}/api/get/all?dateStart=${this.$store.state.filterDateStart}&dateEnd=${this.$store.state.filterDateEnd}`
@@ -367,6 +370,7 @@ export default {
           this.zamowieniaPods = this.getterArray[2];
           this.zamowienia = this.$store.state.zamowienia;
           this.stateUpdating = false;
+          this.showSpinner(false);
         })
         .catch((err) => {
           this.error = true;
@@ -384,6 +388,16 @@ export default {
       if (localStorage.getItem("filteredData") === null) {
         return false;
       } else return true;
+    },
+
+    showSpinner(show) {
+      let spinner = document.getElementById("SPINNER");
+      if (show) {
+        spinner.classList.add("--shown");
+      } else {
+        spinner.classList.remove("--shown");
+        spinner.classList.add("--hidden");
+      }
     },
   },
 };

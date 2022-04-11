@@ -1,5 +1,5 @@
 <template>
-  <!-- <loader-component /> -->
+  <SpinnerComponent />
   <orders-app-component />
   <div id="app-interface" class="d-flex">
     <SidebarPanel />
@@ -10,13 +10,13 @@
 <script>
 import SidebarPanel from "./components/SidebarPanel.vue";
 import OrdersAppComponent from "./components/OrdersAppComponent.vue";
-// import LoaderComponent from "./components/LoaderComponent.vue";
+import SpinnerComponent from "./components/SpinnerComponent.vue";
 
 export default {
   components: {
     SidebarPanel,
     OrdersAppComponent,
-    // LoaderComponent,
+    SpinnerComponent,
   },
   setup() {},
   mounted() {
