@@ -312,9 +312,9 @@ export default {
       let dayStart = new Date(rangeArr[0]).toISOString();
       // TODO: Dodać rozeznanie na dni/miesiące/lata dla dat początkowych i końcowych
       if (rangeArr[1] != "") {
-        let dayEnd = new Date(rangeArr[0]).toISOString();
+        let dayEnd = new Date(rangeArr[1]).toISOString();
         this.$store.commit("setFilterDates");
-        return dayStart + " - " + dayEnd;
+        return dayStart.split("T")[0] + " - " + dayEnd.split("T")[0];
       } else return dayStart;
     },
   },

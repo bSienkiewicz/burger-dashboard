@@ -1,6 +1,6 @@
 <template>
   <div id="orders-app" class="d-none">
-    <h1>{{ count }}</h1>
+    <!-- <h1>{{ count }}</h1> -->
   </div>
 </template>
 
