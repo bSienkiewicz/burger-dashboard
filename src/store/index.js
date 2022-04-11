@@ -56,6 +56,7 @@ export default createStore({
       state.filterDateStart = startDate;
       state.filterDateEnd = endDate;
       console.log("[INFO] Zaktualizowano filtry...");
+      console.log(state.filterDateStart + " " + state.filterDateEnd);
     },
   },
   actions: {},

@@ -9,7 +9,17 @@
             class="fs-5"
             id="refresh-status"
             @click.self="refreshPage()"
-            ><i class="fa-solid fa-spinner spinner"></i> Oświeżanie ...</span
+            v-if="this.stateUpdating"
+            ><i class="fa-solid fa-circle-notch spinner"></i> Oświeżanie
+            ...</span
+          >
+          <span
+            style="float: right"
+            class="fs-5 red-href"
+            id="refresh-status"
+            @click.self="refreshPage()"
+            v-else
+            >Zaktualizowano</span
           >
         </h1>
         <p class="m-0 text-muted">
@@ -22,48 +32,62 @@
         style=""
         id="STATS-BAR"
       >
-        <div class="d-flex align-items-center">
-          <div class="icon-wrapper">
-            <i class="fa-regular fa-chart-bar"></i>
+        <div
+          class="d-flex w-75 justify-content-between align-items-center"
+          v-if="getLocalStorage()"
+        >
+          <div class="d-flex align-items-center">
+            <div class="icon-wrapper">
+              <i class="fa-regular fa-chart-bar"></i>
+            </div>
+            <div class="d-flex flex-column ps-3">
+              <h2 class="fw-bold m-0">{{ iloscZamowien }}</h2>
+              <p class="m-0 pt-1">Ilość zamówień</p>
+              <p style="color: gray; font-size: 0.8rem">
+                <i
+                  class="fa-solid fa-arrow-trend-up pe-1"
+                  style="color: #1d1"
+                ></i
+                >4% (30 dni)
+              </p>
+            </div>
           </div>
-          <div class="d-flex flex-column ps-3">
-            <h2 class="fw-bold m-0">{{ iloscZamowien }}</h2>
-            <p class="m-0 pt-1">Ilość zamówień</p>
-            <p style="color: gray; font-size: 0.8rem">
-              <i class="fa-solid fa-arrow-trend-up pe-1" style="color: #1d1"></i
-              >4% (30 dni)
-            </p>
+
+          <div class="d-flex align-items-center">
+            <div class="icon-wrapper">
+              <i class="fa-solid fa-dollar-sign"></i>
+            </div>
+            <div class="d-flex flex-column ps-3">
+              <h2 class="fw-bold m-0">
+                {{ sumaZamowien }}<span class="fs-5 ps-2">zł</span>
+              </h2>
+              <p class="m-0 pt-1">Wartość paragonów</p>
+              <p style="color: gray; font-size: 0.8rem">
+                <i
+                  class="fa-solid fa-arrow-trend-down pe-1"
+                  style="color: #d11"
+                ></i
+                >1% (30 dni)
+              </p>
+            </div>
+          </div>
+
+          <div class="d-flex align-items-center">
+            <div class="icon-wrapper">
+              <i class="fa-regular fa-rectangle-list"></i>
+            </div>
+            <div class="d-flex flex-column ps-3">
+              <h2 class="fw-bold m-0">{{ srIloscPoz }}</h2>
+              <p class="m-0 pt-1">Ilość pozycji</p>
+              <p style="color: gray; font-size: 0.8rem">
+                Średnio na zamówienie
+              </p>
+            </div>
           </div>
         </div>
-
-        <div class="d-flex align-items-center">
-          <div class="icon-wrapper">
-            <i class="fa-solid fa-dollar-sign"></i>
-          </div>
-          <div class="d-flex flex-column ps-3">
-            <h2 class="fw-bold m-0">
-              {{ sumaZamowien }}<span class="fs-5 ps-2">zł</span>
-            </h2>
-            <p class="m-0 pt-1">Wartość paragonów</p>
-            <p style="color: gray; font-size: 0.8rem">
-              <i
-                class="fa-solid fa-arrow-trend-down pe-1"
-                style="color: #d11"
-              ></i
-              >1% (30 dni)
-            </p>
-          </div>
-        </div>
-
-        <div class="d-flex align-items-center">
-          <div class="icon-wrapper">
-            <i class="fa-regular fa-rectangle-list"></i>
-          </div>
-          <div class="d-flex flex-column ps-3">
-            <h2 class="fw-bold m-0">{{ srIloscPoz }}</h2>
-            <p class="m-0 pt-1">Ilość pozycji</p>
-            <p style="color: gray; font-size: 0.8rem">Średnio na zamówienie</p>
-          </div>
+        <div class="" v-else>
+          <h3 class="m-0">Wybierz okres filtrowania</h3>
+          <p>Nie wybrano okresu filtrowania.</p>
         </div>
         <Datepicker
           v-model="date"
@@ -75,6 +99,7 @@
           nowButtonLabel="Teraz"
           :monthChangeOnScroll="true"
           @update:modelValue="handleDate"
+          dark
         >
           <template #trigger>
             <div
@@ -243,22 +268,22 @@
 <script>
 import { ref } from "vue";
 import axios from "axios";
+
 export default {
-  setup() {
+  data() {
     const date = ref();
-    let X = "JEBAĆ POLICJE";
-    console.log(X);
+
+    // Listener uruchamiający się przy zmianie okresu filtrowania
     const handleDate = (modelData) => {
+      if (modelData[1] == null) modelData[1] = modelData[0]; // ustaw drugą datę taką samą jeśli druga pusta
       date.value = modelData;
-      localStorage.setItem("filteredData", modelData);
+      localStorage.setItem("filteredData", modelData); // ustaw localStorage
+      let dayStart = new Date(modelData[0]).toISOString();
+      let dayEnd = new Date(modelData[1]).toISOString();
+      this.refreshState(); // odśwież stan aplikacji
+      this.$store.commit("setFilterDates", dayStart, dayEnd); // wprowadź daty do stanu
     };
 
-    return {
-      date,
-      handleDate,
-    };
-  },
-  data() {
     return {
       iloscZamowien: 0,
       sumaZamowien: 0,
@@ -267,55 +292,75 @@ export default {
       zamowienia: [],
       getterArray: [],
       update: true,
+      stateUpdating: false,
+      date,
+      handleDate,
     };
   },
   name: "DashboardHome",
-  components: {},
   mounted() {
-    if (this.update)
+    this.refreshState(); // odśwież stan aplikacji po zamontowaniu komponentu
+  },
+  methods: {
+    refreshState() {
+      // zaktualizuj stan tylko jeśli localStorage nie jest pusty
+      if (!this.update || localStorage.getItem("filteredData") == null) return;
+      this.stateUpdating = true;
       axios
         .get("https://projectburger.herokuapp.com/api/get/all")
         .then((res) => {
           this.$store.commit("setAllFresh", res);
         })
         .then(() => {
+          // przypisz do zmiennych lokalnych wartości ze $store
           this.iloscZamowien = this.$store.state.zamowienia.length;
           this.getterArray = this.$store.getters.getTopStats;
           this.sumaZamowien = this.getterArray[0].toFixed(2);
           this.srIloscPoz = this.getterArray[1].toFixed(1);
           this.zamowieniaPods = this.getterArray[2];
           this.zamowienia = this.$store.state.zamowienia;
-          console.log(this.getterArray);
-        })
-        .then(() => {
-          let dateNow = new Date();
-          let hourNow = dateNow.getHours();
-          let minuteNow = dateNow.getMinutes();
-          if (hourNow < 10) hourNow = "0" + hourNow;
-
-          if (minuteNow < 10) minuteNow = "0" + minuteNow;
-          let status = document.getElementById("refresh-status");
-
-          status.innerHTML = "Zaktualizowano o " + hourNow + ":" + minuteNow;
-          status.style.borderBottom = "2px solid #e50f33";
-          status.style.color = "#e50f33";
-          status.style.cursor = "pointer";
+          this.stateUpdating = false;
         });
-  },
-  methods: {
+    },
+
     refreshPage() {
+      // odśwież stronę
       window.location.reload(true);
     },
+
     getFilterRange() {
-      let range = localStorage.getItem("filteredData");
-      let rangeArr = range.split(",");
-      let dayStart = new Date(rangeArr[0]).toISOString();
-      // TODO: Dodać rozeznanie na dni/miesiące/lata dla dat początkowych i końcowych
-      if (rangeArr[1] != "") {
-        let dayEnd = new Date(rangeArr[1]).toISOString();
-        this.$store.commit("setFilterDates");
-        return dayStart.split("T")[0] + " - " + dayEnd.split("T")[0];
-      } else return dayStart;
+      // zwraca zakres filtrowania w formie string
+
+      //Jeśli data nie znajduje się w localStorage
+      if (localStorage.getItem("filteredData") == null) {
+        return "";
+      } else {
+        let range = localStorage.getItem("filteredData");
+        let rangeArr = range.split(",");
+        let dayStart = new Date(rangeArr[0]).toISOString();
+        // Jeśli data[1] nie jest taka sama jak data[0] pokaż obie daty
+        if (rangeArr[1] != rangeArr[0]) {
+          let dayEnd = new Date(rangeArr[1]).toISOString();
+          return dayStart.split("T")[0] + " - " + dayEnd.split("T")[0];
+        }
+        // Jeśli jest tylko jedna data pokaż jedną datę
+        else {
+          if (
+            new Date(dayStart).toISOString().split("T")[0] ==
+            new Date().toISOString().split("T")[0]
+          ) {
+            return "Dziś";
+          }
+          return dayStart.split("T")[0];
+        }
+      }
+    },
+
+    getLocalStorage() {
+      // sprawdź czy localStorage puste
+      if (localStorage.getItem("filteredData") === null) {
+        return false;
+      } else return true;
     },
   },
 };
@@ -356,6 +401,12 @@ export default {
   animation-duration: 1000ms;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
+}
+
+.red-href {
+  border-bottom: 2px solid #e50f33;
+  color: #e50f33;
+  cursor: pointer;
 }
 
 @keyframes spin {
