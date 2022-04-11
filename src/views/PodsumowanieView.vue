@@ -246,7 +246,8 @@ import axios from "axios";
 export default {
   setup() {
     const date = ref();
-
+    let X = "JEBAĆ POLICJE";
+    console.log(X);
     const handleDate = (modelData) => {
       date.value = modelData;
       localStorage.setItem("filteredData", modelData);
