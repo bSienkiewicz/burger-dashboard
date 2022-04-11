@@ -5,8 +5,8 @@ export default createStore({
     skladniki: {},
     menu: {},
     zamowienia: {},
-    filterDateStart: {},
-    filterDateEnd: {},
+    filterDateStart: "",
+    filterDateEnd: "",
   },
   getters: {
     getTopStats(state) {
@@ -52,10 +52,11 @@ export default createStore({
       console.log(state.zamowienia);
     },
 
-    setFilterDates(state, startDate, endDate) {
-      state.filterDateStart = startDate;
-      state.filterDateEnd = endDate;
+    setFilterDates(state, payload) {
+      state.filterDateStart = payload.dateStart;
+      state.filterDateEnd = payload.dateEnd;
       console.log("[INFO] Zaktualizowano filtry...");
+      console.log(payload);
       console.log(state.filterDateStart + " " + state.filterDateEnd);
     },
   },

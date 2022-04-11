@@ -8,10 +8,18 @@
             style="float: right"
             class="fs-5"
             id="refresh-status"
-            @click.self="refreshPage()"
-            v-if="this.stateUpdating"
-            ><i class="fa-solid fa-circle-notch spinner"></i> Oświeżanie
+            v-if="this.stateUpdating && !this.error"
+            ><i class="fa-solid fa-circle-notch spinner"></i> Odświeżanie
             ...</span
+          >
+          <span
+            style="float: right; cursor: pointer"
+            class="fs-5 text-danger"
+            id="refresh-status"
+            @click.self="refreshPage()"
+            v-else-if="this.stateUpdating && this.error"
+            ><i class="fa-solid fa-circle-exclamation"></i> Błąd
+            aktualizacji</span
           >
           <span
             style="float: right"
@@ -23,7 +31,11 @@
           >
         </h1>
         <p class="m-0 text-muted">
-          Podsumowanie na okres 01.04.2022 - 03.04.2022
+          Podsumowanie na okres {{ dateFilteringStart[2] }}.{{
+            dateFilteringStart[1]
+          }}.{{ dateFilteringStart[0] }} - {{ dateFilteringEnd[2] }}.{{
+            dateFilteringEnd[1]
+          }}.{{ dateFilteringEnd[0] }}
         </p>
       </div>
 
@@ -114,7 +126,24 @@
                 ></i>
                 Okres filtrowania
               </h5>
-              <p class="m-0">{{ getFilterRange() }}</p>
+              <p
+                class="m-0"
+                v-if="
+                  this.dateFilteringStart[2] == this.dateFilteringEnd[2] &&
+                  this.dateFilteringStart[1] == this.dateFilteringEnd[1] &&
+                  this.dateFilteringStart[0] == this.dateFilteringEnd[0]
+                "
+              >
+                Dziś
+              </p>
+              <p class="m-0" v-else>
+                {{ dateFilteringStart[2] }}.{{ dateFilteringStart[1] }}.{{
+                  dateFilteringStart[0]
+                }}
+                - {{ dateFilteringEnd[2] }}.{{ dateFilteringEnd[1] }}.{{
+                  dateFilteringEnd[0]
+                }}
+              </p>
             </div>
           </template>
         </Datepicker>
@@ -163,6 +192,7 @@
                 padding-bottom: 10px;
                 font-weight: bold;
               "
+              v-if="zamowienia.length > 0"
             >
               <div class="col-1" style="color: #a4a4a4">ID</div>
               <div class="col-2 text-center" style="color: #a4a4a4">
@@ -177,8 +207,8 @@
               <div
                 class="row py-3"
                 style="border-bottom: 1px #d1d1d1 solid"
-                v-for="idx in 5"
-                :key="idx"
+                v-for="item in zamowienia.slice(-5)"
+                :key="item.id"
               >
                 <div class="col-1">
                   <p
@@ -189,41 +219,37 @@
                       border-radius: 200px;
                     "
                   >
-                    {{ zamowienia.slice(-5)[5 - idx].id }}
+                    {{ item.id }}
                   </p>
                 </div>
                 <div class="col-2 text-center">
-                  {{ zamowienia.slice(-5)[5 - idx].pozycje.split(",").length }}
+                  {{ item.pozycje.split(",").length }}
                 </div>
                 <div class="col-3">
                   <i
                     class="fa-solid fa-square"
                     style="color: blue"
-                    v-if="zamowienia.slice(-5)[5 - idx].status == 'W trakcie'"
+                    v-if="item.status == 'W trakcie'"
                   ></i>
                   <i
                     class="fa-brands fa-hotjar"
                     style="color: orange"
-                    v-else-if="zamowienia.slice(-5)[5 - idx].status == 'Gotowe'"
+                    v-else-if="item.status == 'Gotowe'"
                   ></i>
                   <i
                     class="fa-solid fa-square"
                     style="color: green"
-                    v-else-if="
-                      zamowienia.slice(-5)[5 - idx].status == 'Odebrane'
-                    "
+                    v-else-if="item.status == 'Odebrane'"
                   ></i>
                   <i class="fa-solid fa-square" style="color: red" v-else></i>
-                  {{ zamowienia.slice(-5)[5 - idx].status }}
+                  {{ item.status }}
+                </div>
+                <div class="col-2">{{ item.kwota.toFixed(2) }}zł</div>
+                <div class="col-2">
+                  {{ item.metoda_platnosci }}
                 </div>
                 <div class="col-2">
-                  {{ zamowienia.slice(-5)[5 - idx].kwota.toFixed(2) }}zł
-                </div>
-                <div class="col-2">
-                  {{ zamowienia.slice(-5)[5 - idx].metoda_platnosci }}
-                </div>
-                <div class="col-2">
-                  {{ zamowienia.slice(-5)[5 - idx].take_away }}
+                  {{ item.take_away }}
                 </div>
               </div>
             </div>
@@ -278,14 +304,13 @@ export default {
       if (modelData[1] == null) modelData[1] = modelData[0]; // ustaw drugą datę taką samą jeśli druga pusta
       date.value = modelData;
       localStorage.setItem("filteredData", modelData); // ustaw localStorage
-      let dayStart = new Date(modelData[0]).toISOString();
-      let dayEnd = new Date(modelData[1]).toISOString();
       this.refreshState(); // odśwież stan aplikacji
-      this.$store.commit("setFilterDates", dayStart, dayEnd); // wprowadź daty do stanu
     };
 
     return {
       iloscZamowien: 0,
+      dateFilteringStart: [],
+      dateFilteringEnd: [],
       sumaZamowien: 0,
       srIloscPoz: 0,
       zamowieniaPods: [0, 0, 0, 0],
@@ -293,6 +318,8 @@ export default {
       getterArray: [],
       update: true,
       stateUpdating: false,
+      error: false,
+      apiURL: "https://projectburger.herokuapp.com",
       date,
       handleDate,
     };
@@ -302,12 +329,32 @@ export default {
     this.refreshState(); // odśwież stan aplikacji po zamontowaniu komponentu
   },
   methods: {
+    updateStateDates() {
+      let dateStart = new Date(
+        localStorage.getItem("filteredData").split(",")[0]
+      )
+        .toISOString()
+        .split("T")[0];
+      let dateEnd = new Date(localStorage.getItem("filteredData").split(",")[1])
+        .toISOString()
+        .split("T")[0];
+
+      this.dateFilteringStart = dateStart.split("-");
+      this.dateFilteringEnd = dateEnd.split("-");
+      this.$store.commit("setFilterDates", {
+        dateStart: dateStart,
+        dateEnd: dateEnd,
+      });
+    },
     refreshState() {
       // zaktualizuj stan tylko jeśli localStorage nie jest pusty
       if (!this.update || localStorage.getItem("filteredData") == null) return;
       this.stateUpdating = true;
+      this.updateStateDates();
       axios
-        .get("https://projectburger.herokuapp.com/api/get/all")
+        .get(
+          `${this.apiURL}/api/get/all?dateStart=${this.$store.state.filterDateStart}&dateEnd=${this.$store.state.filterDateEnd}`
+        )
         .then((res) => {
           this.$store.commit("setAllFresh", res);
         })
@@ -320,40 +367,16 @@ export default {
           this.zamowieniaPods = this.getterArray[2];
           this.zamowienia = this.$store.state.zamowienia;
           this.stateUpdating = false;
+        })
+        .catch((err) => {
+          this.error = true;
+          throw err;
         });
     },
 
     refreshPage() {
       // odśwież stronę
       window.location.reload(true);
-    },
-
-    getFilterRange() {
-      // zwraca zakres filtrowania w formie string
-
-      //Jeśli data nie znajduje się w localStorage
-      if (localStorage.getItem("filteredData") == null) {
-        return "";
-      } else {
-        let range = localStorage.getItem("filteredData");
-        let rangeArr = range.split(",");
-        let dayStart = new Date(rangeArr[0]).toISOString();
-        // Jeśli data[1] nie jest taka sama jak data[0] pokaż obie daty
-        if (rangeArr[1] != rangeArr[0]) {
-          let dayEnd = new Date(rangeArr[1]).toISOString();
-          return dayStart.split("T")[0] + " - " + dayEnd.split("T")[0];
-        }
-        // Jeśli jest tylko jedna data pokaż jedną datę
-        else {
-          if (
-            new Date(dayStart).toISOString().split("T")[0] ==
-            new Date().toISOString().split("T")[0]
-          ) {
-            return "Dziś";
-          }
-          return dayStart.split("T")[0];
-        }
-      }
     },
 
     getLocalStorage() {
@@ -398,7 +421,7 @@ export default {
 
 .spinner {
   animation-name: spin;
-  animation-duration: 1000ms;
+  animation-duration: 500ms;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
 }
@@ -410,9 +433,6 @@ export default {
 }
 
 @keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
   to {
     transform: rotate(360deg);
   }
