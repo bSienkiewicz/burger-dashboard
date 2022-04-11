@@ -5,6 +5,8 @@ export default createStore({
     skladniki: {},
     menu: {},
     zamowienia: {},
+    filterDateStart: {},
+    filterDateEnd: {},
   },
   getters: {
     getTopStats(state) {
@@ -27,7 +29,6 @@ export default createStore({
   mutations: {
     setAllFresh(state, res) {
       state.skladniki = res.data.skladniki;
-      console.log(state.skladniki);
       console.log("[INFO] Zaktualizowano skladniki...");
 
       state.menu = res.data.menu;
@@ -45,11 +46,16 @@ export default createStore({
           menuElement.skladniki = [];
         }
       });
-      console.log(state.menu);
       console.log("[INFO] Zaktualizowano menu...");
       state.zamowienia = res.data.zamowienia;
-      console.log(state.zamowienia);
       console.log("[INFO] Zaktualizowano zamowienia...");
+      console.log(state.zamowienia);
+    },
+
+    setFilterDates(state, startDate, endDate) {
+      state.filterDateStart = startDate;
+      state.filterDateEnd = endDate;
+      console.log("[INFO] Zaktualizowano filtry...");
     },
   },
   actions: {},
