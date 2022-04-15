@@ -2,41 +2,7 @@
   <div id="CONTENT-CONTAINER">
     <div class="" style="height: 100%; overflow-y: auto; padding: 50px">
       <div class="header-container">
-        <h1 class="m-0">
-          Podsumowanie
-          <span
-            style="float: right"
-            class="fs-5"
-            id="refresh-status"
-            v-if="this.stateUpdating && !this.error"
-          >
-            Odświeżanie ...</span
-          >
-          <span
-            style="float: right; cursor: pointer"
-            class="fs-5 text-danger"
-            id="refresh-status"
-            @click.self="refreshPage()"
-            v-else-if="this.stateUpdating && this.error"
-            ><i class="fa-solid fa-circle-exclamation"></i> Błąd
-            aktualizacji</span
-          >
-          <span
-            style="float: right"
-            class="fs-5 red-href"
-            id="refresh-status"
-            @click.self="refreshPage()"
-            v-else
-            >Zaktualizowano</span
-          >
-        </h1>
-        <p class="m-0 text-muted">
-          Podsumowanie na okres {{ dateFilteringStart[2] }}.{{
-            dateFilteringStart[1]
-          }}.{{ dateFilteringStart[0] }} - {{ dateFilteringEnd[2] }}.{{
-            dateFilteringEnd[1]
-          }}.{{ dateFilteringEnd[0] }}
-        </p>
+        <h1 class="m-0">Podsumowanie</h1>
       </div>
 
       <div
@@ -53,7 +19,9 @@
               <i class="fa-regular fa-chart-bar"></i>
             </div>
             <div class="d-flex flex-column ps-3">
-              <h2 class="fw-bold m-0">{{ iloscZamowien }}</h2>
+              <h2 class="fw-bold m-0">
+                {{ this.$store.state.podsumowanie.zamowienia.length }}
+              </h2>
               <p class="m-0 pt-1">Ilość zamówień</p>
               <p style="color: gray; font-size: 0.8rem">
                 <i
@@ -71,7 +39,8 @@
             </div>
             <div class="d-flex flex-column ps-3">
               <h2 class="fw-bold m-0">
-                {{ sumaZamowien }}<span class="fs-5 ps-2">zł</span>
+                {{ this.$store.state.podsumowanie.stats[0]
+                }}<span class="fs-5 ps-2">zł</span>
               </h2>
               <p class="m-0 pt-1">Wartość paragonów</p>
               <p style="color: gray; font-size: 0.8rem">
@@ -89,7 +58,9 @@
               <i class="fa-regular fa-rectangle-list"></i>
             </div>
             <div class="d-flex flex-column ps-3">
-              <h2 class="fw-bold m-0">{{ srIloscPoz }}</h2>
+              <h2 class="fw-bold m-0">
+                {{ this.$store.state.podsumowanie.stats[1] }}
+              </h2>
               <p class="m-0 pt-1">Ilość pozycji</p>
               <p style="color: gray; font-size: 0.8rem">
                 Średnio na zamówienie
@@ -97,56 +68,6 @@
             </div>
           </div>
         </div>
-        <div class="" v-else>
-          <h3 class="m-0">Wybierz okres filtrowania</h3>
-          <p>Nie wybrano okresu filtrowania.</p>
-        </div>
-        <Datepicker
-          v-model="date"
-          range
-          locale="pl"
-          selectText="Wybierz"
-          cancelText="Zamknij"
-          showNowButton
-          nowButtonLabel="Teraz"
-          :monthChangeOnScroll="true"
-          @update:modelValue="handleDate"
-          dark
-        >
-          <template #trigger>
-            <div
-              class="d-flex flex-column align-items-center text-center"
-              id="FILTER-PERIOD"
-              style=""
-            >
-              <h5 class="m-0">
-                <i
-                  class="fa-regular fa-calendar pe-1"
-                  style="color: var(--basic-red)"
-                ></i>
-                Okres filtrowania
-              </h5>
-              <p
-                class="m-0"
-                v-if="
-                  this.dateFilteringStart[2] == this.dateFilteringEnd[2] &&
-                  this.dateFilteringStart[1] == this.dateFilteringEnd[1] &&
-                  this.dateFilteringStart[0] == this.dateFilteringEnd[0]
-                "
-              >
-                Dziś
-              </p>
-              <p class="m-0" v-else>
-                {{ dateFilteringStart[2] }}.{{ dateFilteringStart[1] }}.{{
-                  dateFilteringStart[0]
-                }}
-                - {{ dateFilteringEnd[2] }}.{{ dateFilteringEnd[1] }}.{{
-                  dateFilteringEnd[0]
-                }}
-              </p>
-            </div>
-          </template>
-        </Datepicker>
       </div>
 
       <div class="overflow-hidden">
@@ -167,26 +88,30 @@
             </h5>
             <div class="d-flex justify-content-between py-3">
               <div class="">
-                <h3 class="m-0">{{ zamowieniaPods[0] }}</h3>
+                <h3 class="m-0">
+                  {{ this.$store.state.podsumowanie.stats[2][0] }}
+                </h3>
                 <p class="text-muted m-0">W trakcie</p>
               </div>
               <div class="">
-                <h3 class="m-0">{{ zamowieniaPods[1] }}</h3>
+                <h3 class="m-0">
+                  {{ this.$store.state.podsumowanie.stats[2][1] }}
+                </h3>
                 <p class="text-muted m-0">Gotowe</p>
               </div>
               <div class="">
-                <h3 class="m-0">{{ zamowieniaPods[2] }}</h3>
+                <h3 class="m-0">
+                  {{ this.$store.state.podsumowanie.stats[2][2] }}
+                </h3>
                 <p class="text-muted m-0">Odebrane</p>
               </div>
               <div class="">
-                <h3 class="m-0">{{ zamowieniaPods[3] }}</h3>
+                <h3 class="m-0">
+                  {{ this.$store.state.podsumowanie.stats[2][3] }}
+                </h3>
                 <p class="text-muted m-0">Anulowane</p>
               </div>
             </div>
-            <!-- <h5>
-          Średni czas zamówienia: 7min
-          <span style="color: #d11">(+40%)</span>
-        </h5> -->
             <div
               class="row"
               style="
@@ -205,11 +130,16 @@
               <div class="col-2" style="color: #a4a4a4">Płatność</div>
               <div class="col-2" style="color: #a4a4a4">Rodzaj</div>
             </div>
-            <div class="" v-if="zamowienia.length > 0">
+            <div
+              class=""
+              v-if="this.$store.state.podsumowanie.zamowienia.length > 0"
+            >
               <div
                 class="row py-3"
                 style="border-bottom: 1px #d1d1d1 solid"
-                v-for="item in zamowienia.slice(-5)"
+                v-for="item in this.$store.state.podsumowanie.zamowienia
+                  .slice(-5)
+                  .reverse()"
                 :key="item.id"
               >
                 <div class="col-1">
@@ -234,7 +164,7 @@
                     v-if="item.status == 'W trakcie'"
                   ></i>
                   <i
-                    class="fa-brands fa-hotjar"
+                    class="fa-solid fa-square"
                     style="color: orange"
                     v-else-if="item.status == 'Gotowe'"
                   ></i>
@@ -295,7 +225,6 @@
 
 <script>
 import { ref } from "vue";
-import axios from "axios";
 
 export default {
   data() {
@@ -327,77 +256,12 @@ export default {
     };
   },
   name: "DashboardHome",
-  mounted() {
-    this.refreshState(); // odśwież stan aplikacji po zamontowaniu komponentu
-  },
   methods: {
-    updateStateDates() {
-      let dateStart = new Date(
-        localStorage.getItem("filteredData").split(",")[0]
-      )
-        .toISOString()
-        .split("T")[0];
-      let dateEnd = new Date(localStorage.getItem("filteredData").split(",")[1])
-        .toISOString()
-        .split("T")[0];
-
-      this.dateFilteringStart = dateStart.split("-");
-      this.dateFilteringEnd = dateEnd.split("-");
-      this.$store.commit("setFilterDates", {
-        dateStart: dateStart,
-        dateEnd: dateEnd,
-      });
-    },
-    refreshState() {
-      // zaktualizuj stan tylko jeśli localStorage nie jest pusty
-      if (!this.update || localStorage.getItem("filteredData") == null) return;
-      this.stateUpdating = true;
-      this.updateStateDates();
-      this.showSpinner(true);
-      axios
-        .get(
-          `${this.apiURL}/api/get/all?dateStart=${this.$store.state.filterDateStart}&dateEnd=${this.$store.state.filterDateEnd}`
-        )
-        .then((res) => {
-          this.$store.commit("setAllFresh", res);
-        })
-        .then(() => {
-          // przypisz do zmiennych lokalnych wartości ze $store
-          this.iloscZamowien = this.$store.state.zamowienia.length;
-          this.getterArray = this.$store.getters.getTopStats;
-          this.sumaZamowien = this.getterArray[0].toFixed(2);
-          this.srIloscPoz = this.getterArray[1].toFixed(1);
-          this.zamowieniaPods = this.getterArray[2];
-          this.zamowienia = this.$store.state.zamowienia;
-          this.stateUpdating = false;
-          this.showSpinner(false);
-        })
-        .catch((err) => {
-          this.error = true;
-          throw err;
-        });
-    },
-
-    refreshPage() {
-      // odśwież stronę
-      window.location.reload(true);
-    },
-
     getLocalStorage() {
       // sprawdź czy localStorage puste
       if (localStorage.getItem("filteredData") === null) {
         return false;
       } else return true;
-    },
-
-    showSpinner(show) {
-      let spinner = document.getElementById("SPINNER");
-      if (show) {
-        spinner.classList.add("--shown");
-      } else {
-        spinner.classList.remove("--shown");
-        spinner.classList.add("--hidden");
-      }
     },
   },
 };

@@ -1,22 +1,26 @@
 <template>
-  <SpinnerComponent />
-  <orders-app-component />
   <div id="app-interface" class="d-flex">
     <SidebarPanel />
-    <router-view />
+    <div class="d-flex flex-column flex-grow-1" style="position: relative">
+      <SpinnerComponent />
+      <div id="right">
+        <top-panel />
+        <router-view />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import SidebarPanel from "./components/SidebarPanel.vue";
-import OrdersAppComponent from "./components/OrdersAppComponent.vue";
 import SpinnerComponent from "./components/SpinnerComponent.vue";
+import TopPanel from "./components/TopPanel.vue";
 
 export default {
   components: {
     SidebarPanel,
-    OrdersAppComponent,
     SpinnerComponent,
+    TopPanel,
   },
   setup() {},
   mounted() {
@@ -61,14 +65,14 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   font-family: PhysisMedium;
+  background: #f7f7f7;
 }
 
 #CONTENT-CONTAINER {
   width: 100%;
-  height: 100vh;
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
-  background: #f7f7f7;
   overflow-y: auto;
 }
 
@@ -83,5 +87,17 @@ nav a {
 
 nav a.router-link-exact-active {
   color: #42b983;
+}
+
+#right {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.red-href {
+  border-bottom: 2px solid #e50f33;
+  color: #e50f33;
+  cursor: pointer;
 }
 </style>
