@@ -89,8 +89,8 @@ export default {
       dateFilteringEnd: [],
       date,
       handleDate,
-      // apiURL: "https://projectburger.herokuapp.com",
-      apiURL: "http://localhost:3000",
+      apiURL: "https://projectburger.herokuapp.com",
+      // apiURL: "http://localhost:3000",
       update: true,
       stateUpdating: false,
     };

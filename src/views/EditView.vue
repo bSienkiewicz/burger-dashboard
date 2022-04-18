@@ -13,12 +13,7 @@
           <i class="fa-solid fa-chevron-left"></i> Powrót
         </a>
         <h3 class="pt-3">Edycja zamówienia #{{ this.id }}</h3>
-        <h5
-          v-for="item in this.$store.state.podsumowanie.zamowienia"
-          :key="item.id"
-        >
-          {{ item }}
-        </h5>
+        <h5 v-for="pozycja in this.oPoz" :key="pozycja"></h5>
       </div>
     </div>
   </transition>
@@ -30,7 +25,16 @@ export default {
   data() {
     return {
       id: 0,
-      apiURL: "http://localhost:3000",
+      apiURL: "https://projectburger.herokuapp.com",
+      //   apiURL: "http://localhost:3000",
+      oPoz: "",
+      oKwota: "",
+      oStatus: "",
+      oDataZ: "",
+      oDataW: "",
+      oCzasZam: 0.0,
+      oMP: "",
+      oRodzaj: "",
     };
   },
   mounted() {
@@ -41,7 +45,10 @@ export default {
   methods: {
     getOrderData(id) {
       axios.get(`${this.apiURL}/api/v1/get/zamowienia/${id}`).then((res) => {
-        console.log(res.data);
+        const zam = res.data.data[0];
+        console.log(zam);
+        this.oPoz = zam.pozycje.split(",");
+        console.log(this.$store.state.podsumowanie.menu);
       });
     },
   },
