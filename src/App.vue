@@ -100,4 +100,11 @@ nav a.router-link-exact-active {
   color: #e50f33;
   cursor: pointer;
 }
+
+.text-red {
+  color: #e50f33;
+}
+.bg-red {
+  background: #e50f33;
+}
 </style>

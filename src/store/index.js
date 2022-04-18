@@ -17,9 +17,8 @@ export default createStore({
     setAllFresh(state, res) {
       state.podsumowanie.skladniki = res.data.skladniki;
       console.log("[INFO] Zaktualizowano skladniki...");
-
       state.podsumowanie.menu = res.data.menu;
-      state.podsumowanie.menu.forEach((menuElement) => {
+      res.data.menu.forEach((menuElement) => {
         try {
           var skl = menuElement.skladniki.split(",");
           menuElement.skladniki = [];
@@ -37,7 +36,6 @@ export default createStore({
       console.log("[INFO] Zaktualizowano menu...");
       state.podsumowanie.zamowienia = res.data.zamowienia;
       console.log("[INFO] Zaktualizowano zamowienia...");
-      console.log(state.podsumowanie.zamowienia);
     },
 
     setUpdated(state) {
@@ -48,15 +46,12 @@ export default createStore({
       state.podsumowanie.filterDateStart = payload.dateStart;
       state.podsumowanie.filterDateEnd = payload.dateEnd;
       console.log("[INFO] Zaktualizowano filtry...");
-      console.log(payload);
-      console.log(
-        state.filterDateStart + " " + state.podsumowanie.filterDateEnd
-      );
     },
     setTopStats(state) {
       let wartoscZamowien = 0;
       let srIloscPozycji = 0;
       let zamowienia = [0, 0, 0, 0];
+      console.log(state.podsumowanie.zamowienia);
       state.podsumowanie.zamowienia.forEach((element) => {
         wartoscZamowien += element.kwota;
         srIloscPozycji += element.pozycje.split(",").length;
@@ -69,7 +64,7 @@ export default createStore({
       srIloscPozycji /= state.podsumowanie.zamowienia.length;
       state.podsumowanie.stats = [
         wartoscZamowien.toFixed(2),
-        srIloscPozycji,
+        srIloscPozycji.toFixed(1),
         zamowienia,
       ];
     },

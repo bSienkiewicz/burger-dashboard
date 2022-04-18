@@ -15,23 +15,22 @@
           color: #b0b0b0;
           font-weight: bold;
           border-bottom: 1px solid #b0b0b0;
+          font-size: 0.9rem;
         "
       >
         <div class="col-1">ID</div>
         <div class="col-2">Status</div>
         <div class="col-1">Pozycje</div>
-        <div class="col-2">Metoda płatności</div>
+        <div class="col-1">Płatność</div>
         <div class="col-2">Data zamówienia</div>
         <div class="col-2">Data wykonania</div>
         <div class="col-1">Czas</div>
         <div class="col-1">Rodzaj</div>
+        <div class="col-1">Opcje</div>
       </div>
       <div class="order-section">
         <div
-          class=""
-          v-for="(
-            item, idx
-          ) in this.$store.state.podsumowanie.zamowienia.reverse()"
+          v-for="(item, idx) in this.$store.state.podsumowanie.zamowienia"
           :key="item.id"
         >
           <div
@@ -42,36 +41,26 @@
               #{{ item.id }}
             </div>
             <div class="col-2 fw-bold d-flex">
-              <div
-                class="d-flex align-items-center"
-                style="
-                  background: #dedede;
-                  padding-left: 16px;
-                  padding-right: 16px;
-                  padding-top: 3px;
-                  padding-bottom: 3px;
-                  border-radius: 999px;
-                "
-              >
+              <div class="d-flex align-items-center">
                 <i
                   v-if="item.status == 'W trakcie'"
                   style="color: #d000ff; font-size: 0.7rem"
-                  class="fa-solid fa-square pe-4"
+                  class="fa-solid fa-square pe-2"
                 ></i>
                 <i
                   v-else-if="item.status == 'Anulowane'"
                   style="color: #d11; font-size: 0.7rem"
-                  class="fa-solid fa-square pe-4"
+                  class="fa-solid fa-square pe-2"
                 ></i
                 ><i
                   v-else-if="item.status == 'Gotowe'"
                   style="color: #ffae00; font-size: 0.7rem"
-                  class="fa-solid fa-square pe-4"
+                  class="fa-solid fa-square pe-2"
                 ></i
                 ><i
                   v-else-if="item.status == 'Odebrane'"
                   style="color: #3eb000; font-size: 0.7rem"
-                  class="fa-solid fa-square pe-4"
+                  class="fa-solid fa-square pe-2"
                 ></i>
                 <p class="m-0">{{ item.status }}</p>
               </div>
@@ -79,7 +68,7 @@
             <div class="col-1 d-flex align-items-center">
               {{ item.pozycje.split(",").length }}
             </div>
-            <div class="col-2 d-flex align-items-center">
+            <div class="col-1 d-flex align-items-center">
               <i
                 class="fa-solid fa-money-bill-1 pe-2"
                 v-if="item.metoda_platnosci == 'Gotówka'"
@@ -114,6 +103,31 @@
             <div class="col-1 d-flex align-items-center">
               {{ item.take_away }}
             </div>
+            <div class="col-1 d-flex align-items-center justify-content-center">
+              <div class="btn-group">
+                <button
+                  class="btn btn-secondary btn-sm dropdown-toggle"
+                  type="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Opcje
+                </button>
+                <ul class="dropdown-menu dropdown-menu-dark">
+                  <router-link
+                    :to="{ name: 'edit', query: { id: item.id } }"
+                    class="dropdown-item"
+                    >Edytuj</router-link
+                  >
+                  <div
+                    class="dropdown-item bg-danger"
+                    @click="sendAlert('Usuwanie wpisów wyłączone')"
+                  >
+                    Usuń
+                  </div>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -122,7 +136,25 @@
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    sendAlert(msg) {
+      alert(msg);
+    },
+    getItemData(pos) {
+      let item = this.$store.state.podsumowanie.menu.find(
+        (pozycja) => pozycja.id == pos
+      );
+      return item;
+    },
+  },
+  computed: {
+    // reverseArray() {
+    //   let arr = this.$store.state.podsumowanie.zamowienia;
+    //   return arr.reverse();
+    // },
+  },
+};
 </script>
 
 <style>
@@ -142,5 +174,6 @@ export default {};
 .order-section {
   height: 80%;
   overflow-y: auto;
+  font-size: 0.9rem;
 }
 </style>

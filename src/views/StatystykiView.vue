@@ -255,7 +255,7 @@ export default {
       handleDate,
     };
   },
-  name: "DashboardHome",
+  name: "PodsumowanieView",
   methods: {
     getLocalStorage() {
       // sprawdź czy localStorage puste

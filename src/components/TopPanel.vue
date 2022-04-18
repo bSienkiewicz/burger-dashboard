@@ -89,7 +89,8 @@ export default {
       dateFilteringEnd: [],
       date,
       handleDate,
-      apiURL: "https://projectburger.herokuapp.com",
+      // apiURL: "https://projectburger.herokuapp.com",
+      apiURL: "http://localhost:3000",
       update: true,
       stateUpdating: false,
     };
@@ -125,9 +126,10 @@ export default {
 
       axios
         .get(
-          `${this.apiURL}/api/get/all?dateStart=${this.$store.state.podsumowanie.filterDateStart}&dateEnd=${this.$store.state.podsumowanie.filterDateEnd}`
+          `${this.apiURL}/api/v1/get/all?dateStart=${this.$store.state.podsumowanie.filterDateStart}&dateEnd=${this.$store.state.podsumowanie.filterDateEnd}`
         )
         .then((res) => {
+          console.log(res);
           this.$store.commit("setAllFresh", res);
           this.$store.commit("setTopStats");
           this.$store.commit("setUpdated", true);

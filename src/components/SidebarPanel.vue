@@ -17,21 +17,33 @@
     </div>
 
     <div class="navigation d-flex flex-column flex-grow-1">
-      <h5 class="cat-separator">Statystyki</h5>
-      <router-link to="/"
-        ><i class="fa-solid fa-chart-pie pe-3"></i>Podsumowanie</router-link
+      <router-link :to="{ name: 'home' }" class="d-flex align-items-center pt-5"
+        ><i class="fa-solid fa-house pe-3"></i>
+        <p class="m-0">Home</p></router-link
       >
-      <router-link to="/zamowienia"
-        ><i class="fa-solid fa-burger pe-3"></i>Zamówienia</router-link
+      <h5 class="cat-separator">Przegląd</h5>
+      <router-link
+        :to="{ name: 'statystyki' }"
+        class="d-flex align-items-center"
+        ><i class="fa-solid fa-chart-pie pe-3"></i>
+        <p class="m-0">Statystyki</p></router-link
+      >
+      <router-link
+        :to="{ name: 'zamowienia' }"
+        class="d-flex align-items-center"
+        ><i class="fa-solid fa-burger pe-3"></i>
+        <p class="m-0">Zamówienia</p></router-link
       >
       <h5 class="cat-separator">Zarządzanie</h5>
-      <router-link to="/menu"
-        ><i class="fa-solid fa-utensils pe-3"></i>Menu</router-link
+      <router-link :to="{ name: 'menu' }" class="d-flex align-items-center"
+        ><i class="fa-solid fa-utensils pe-3"></i>
+        <p class="m-0">Menu</p></router-link
       >
-      <router-link to="/magazyn"
-        ><i class="fa-solid fa-boxes-stacked pe-3"></i>Magazyn</router-link
+      <router-link :to="{}" class="d-flex align-items-center"
+        ><i class="fa-solid fa-boxes-stacked pe-3"></i>
+        <p class="m-0">Magazyn</p></router-link
       >
-      <router-link to="/orders"
+      <router-link :to="{ name: 'orderpanel' }"
         ><i class="fa-solid fa-tv pe-3"></i>Order Panel</router-link
       >
       <h5 class="cat-separator">Category 3</h5>
@@ -55,6 +67,12 @@ export default {
     window.onresize = () => {
       this.windowWidth = window.innerWidth;
     };
+  },
+  methods: {
+    isMediumScreen() {
+      if (this.windowWidth < 1480) return true;
+      else return false;
+    },
   },
 };
 </script>
@@ -123,7 +141,7 @@ export default {
   margin-bottom: 0;
   margin-top: 60px;
   color: gray;
-  @media only screen and (max-width: 1290px) {
+  @media only screen and (max-width: 1480px) {
     display: none;
   }
 }
