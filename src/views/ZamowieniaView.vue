@@ -20,8 +20,7 @@
       >
         <div class="col-1">ID</div>
         <div class="col-2">Status</div>
-        <div class="col-1">Pozycje</div>
-        <div class="col-1">Płatność</div>
+        <div class="col-2">Pozycje</div>
         <div class="col-2">Data zamówienia</div>
         <div class="col-2">Data wykonania</div>
         <div class="col-1">Czas</div>
@@ -65,16 +64,8 @@
                 <p class="m-0">{{ item.status }}</p>
               </div>
             </div>
-            <div class="col-1 d-flex align-items-center">
-              {{ item.pozycje.split(",").length }}
-            </div>
-            <div class="col-1 d-flex align-items-center">
-              <i
-                class="fa-solid fa-money-bill-1 pe-2"
-                v-if="item.metoda_platnosci == 'Gotówka'"
-              ></i
-              ><i class="fa-solid fa-credit-card pe-2" v-else></i
-              >{{ item.metoda_platnosci }}
+            <div class="col-2 d-flex align-items-center">
+              {{ item.pozycje }}
             </div>
             <div
               class="col-2 d-flex flex-column flex-wrap justify-content-center"

@@ -3,6 +3,8 @@ import { createStore } from "vuex";
 export default createStore({
   state: {
     updated: false,
+    apiURL: "https://projectburger.herokuapp.com/api/v1",
+    // apiURL: "http://localhost:3000/api/v1",
     podsumowanie: {
       skladniki: {},
       menu: {},
@@ -18,6 +20,7 @@ export default createStore({
       state.podsumowanie.skladniki = res.data.skladniki;
       console.log("[INFO] Zaktualizowano skladniki...");
       state.podsumowanie.menu = res.data.menu;
+
       res.data.menu.forEach((menuElement) => {
         try {
           var skl = menuElement.skladniki.split(",");
