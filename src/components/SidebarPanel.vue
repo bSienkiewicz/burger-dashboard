@@ -43,8 +43,8 @@
         ><i class="fa-solid fa-boxes-stacked pe-3"></i>
         <p class="m-0">Magazyn</p></router-link
       >
-      <router-link :to="{ name: 'orderpanel' }"
-        ><i class="fa-solid fa-tv pe-3"></i>Order Panel</router-link
+      <router-link :to="{ name: 'orderpanel' }" class="d-flex align-items-center"
+        ><i class="fa-solid fa-tv pe-3"></i><p class="m-0">Order Panel</p></router-link
       >
       <h5 class="cat-separator">Category 3</h5>
       <router-link to="/d">Block 5</router-link>
