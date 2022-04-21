@@ -10,6 +10,59 @@
         {{ this.$store.state.podsumowanie.menu.length }} pozycji
       </p>
 
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-secondary"
+                 style="
+                color: #b0b0b0;
+                font-weight: bold;
+                border-bottom: 1px solid #b0b0b0;
+                font-size: 0.9rem;
+              "
+      >
+        <div class="dropdown">
+          <button class="btn btn-secondary p-0" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fa-solid fa-filter" style="color: red;font-size: 30px"></i>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo03"
+        style="display: flex;
+               flex-direction: row;"
+        >
+          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled" href="#">Disabled</a>
+            </li>
+          </ul>
+          <form class="form-inline my-2 my-lg-0"
+          style="display: flex;
+                 flex-direction: row;
+                 position: absolute;
+                 right: 30px;
+                 "
+          >
+            <input class="form-control me-sm-2" type="search" placeholder="Czego szukasz chłoptasiu" aria-label="Search"
+            style="width: 20em">
+            <button class="btn my-2 my-sm-0" type="submit"
+            style="background: var(--basic-red);
+                    ">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+          </form>
+        </div>
+      </nav>
+
       <div
         class="row mt-5 g-0 px-3"
         style="
@@ -87,58 +140,10 @@
 </template>
 
 <script>
-import { ref } from "vue";
 
-export default {
-  data() {
-    const date = ref();
-
-    // Listener uruchamiający się przy zmianie okresu filtrowania
-    const handleDate = (modelData) => {
-      if (modelData[1] == null) modelData[1] = modelData[0]; // ustaw drugą datę taką samą jeśli druga pusta
-      date.value = modelData;
-      localStorage.setItem("filteredData", modelData); // ustaw localStorage
-      this.refreshState(); // odśwież stan aplikacji
-    };
-
-    return {
-      iloscZamowien: 0,
-      dateFilteringStart: [],
-      dateFilteringEnd: [],
-      sumaZamowien: 0,
-      srIloscPoz: 0,
-      zamowieniaPods: [0, 0, 0, 0],
-      zamowienia: [],
-      getterArray: [],
-      update: true,
-      stateUpdating: false,
-      error: false,
-      apiURL: "https://projectburger.herokuapp.com",
-      date,
-      handleDate,
-    };
-  },
-  name: "PodsumowanieView",
-  methods: {
-    getLocalStorage() {
-      // sprawdź czy localStorage puste
-      if (localStorage.getItem("filteredData") === null) {
-        return false;
-      } else return true;
-    },
-  },
-};
 </script>
 
 <style scoped>
-#STATS-BAR {
-  background: white;
-  border-radius: 15px;
-  @media only screen and (max-width: 1200px) {
-    display: none !important;
-  }
-}
-
 .greyed {
   background: rgb(234, 234, 234);
 }
