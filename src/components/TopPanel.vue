@@ -120,14 +120,13 @@ export default {
       this.stateUpdating = true;
       this.updateStateDates();
       this.showSpinner(true);
-      console.log("refreshState()");
+      this.$store.commit("setUpdated", false);
 
       axios
         .get(
           `${this.$store.state.apiURL}/get/all?dateStart=${this.$store.state.podsumowanie.filterDateStart}&dateEnd=${this.$store.state.podsumowanie.filterDateEnd}`
         )
         .then((res) => {
-          console.log(res);
           this.$store.commit("setAllFresh", res);
           this.$store.commit("setTopStats");
           this.$store.commit("setUpdated", true);
@@ -141,6 +140,12 @@ export default {
           }, 3000);
         })
         .catch((err) => {
+          this.stateUpdating = false;
+          this.showSpinner(false);
+          setTimeout(() => {
+            document.getElementById("refresh-status").innerHTML =
+              "BŁĄD ODŚWIEŻANIA";
+          }, 500);
           this.error = true;
           throw err;
         });
@@ -182,7 +187,7 @@ export default {
   justify-content: center;
   height: 5vh;
   width: 100%;
-  background-color: #eaeaea;
+  background-color: var(--dark-black);
   transition: 1s all ease;
 }
 

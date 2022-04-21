@@ -1,34 +1,48 @@
 <template>
   <div id="CONTENT-CONTAINER">
     <div
-      style="height: 100%; overflow-y: auto; padding: 50px; font-size: 1.1rem"
+      style="height: 100%; overflow-y: auto; padding: 40px; font-size: 1.1rem"
     >
-      <h1>Home</h1>
+      <h1>Witaj</h1>
       <h5 class="pt-5 text-muted">Przegląd</h5>
-      <div class="d-flex justify-content-between flex-gap">
+      <div class="d-flex justify-content-middle flex-gap">
         <router-link to="/stats" class="p-4 home-item">
-          <h4><i class="fa-solid fa-chart-pie text-red"></i> Statystyki</h4>
-          <h5>Przeglądaj statystyki zamówień z wybranego przedziału</h5>
+          <h4>
+            <i class="fa-solid fa-chart-pie text-red pe-3"></i> Statystyki
+          </h4>
+          <h5 style="font-family: PhysisThin" class="pt-4">
+            Przeglądaj statystyki zamówień z wybranego przedziału
+          </h5>
         </router-link>
         <router-link to="/orders" class="p-4 home-item">
-          <h4><i class="fa-solid fa-burger text-red"></i> Zamówienia</h4>
-          <h5>Sprawdź ostatnie zamówienia, edytuj oraz wprowadzaj zmiany</h5>
+          <h4><i class="fa-solid fa-burger text-red pe-3"></i> Zamówienia</h4>
+          <h5 style="font-family: PhysisThin" class="pt-4">
+            Sprawdź ostatnie zamówienia, edytuj oraz wprowadzaj zmiany
+          </h5>
         </router-link>
       </div>
 
       <h5 class="pt-5 text-muted category-text">Zarządzanie</h5>
       <div class="d-flex justify-content-between flex-gap">
         <router-link to="/menu" class="p-4 home-item">
-          <h4><i class="fa-solid fa-utensils text-red"></i> Menu</h4>
-          <h5>Sprawdź ostatnie zamówienia, edytuj oraz wprowadzaj zmiany</h5>
+          <h4><i class="fa-solid fa-utensils text-red pe-3"></i> Menu</h4>
+          <h5 style="font-family: PhysisThin" class="pt-4">
+            Sprawdź ostatnie zamówienia, edytuj oraz wprowadzaj zmiany
+          </h5>
         </router-link>
         <router-link to="/storage" class="p-4 home-item">
-          <h4><i class="fa-solid fa-boxes-stacked text-red"></i> Magazyn</h4>
-          <h5>Sprawdź ostatnie zamówienia, edytuj oraz wprowadzaj zmiany</h5>
+          <h4>
+            <i class="fa-solid fa-boxes-stacked text-red pe-3"></i> Magazyn
+          </h4>
+          <h5 style="font-family: PhysisThin" class="pt-4">
+            Sprawdź ostatnie zamówienia, edytuj oraz wprowadzaj zmiany
+          </h5>
         </router-link>
         <router-link to="/orderpanel" class="p-4 home-item">
-          <h4><i class="fa-solid fa-tv text-red"></i> Order Panel</h4>
-          <h5>Sprawdź ostatnie zamówienia, edytuj oraz wprowadzaj zmiany</h5>
+          <h4><i class="fa-solid fa-tv text-red pe-3"></i> Order Panel</h4>
+          <h5 style="font-family: PhysisThin" class="pt-4">
+            Sprawdź ostatnie zamówienia, edytuj oraz wprowadzaj zmiany
+          </h5>
         </router-link>
       </div>
     </div>
@@ -43,20 +57,22 @@ export default {
 
 <style lang="scss">
 a {
-  color: black;
+  color: white;
   text-decoration: none;
 }
 .home-item {
-  background: #e8e8e8;
-  border-radius: 5px;
+  background: var(--dark-black);
+  box-shadow: 0px 3px 5px 0px #181818;
+  // border-radius: 5px;
   transition: 200ms all ease;
   &:hover {
     background: #e50f33;
+    box-shadow: 0px 5px 10px 0px rgb(13, 13, 13);
   }
   &:hover * {
     color: white;
   }
-  border-top: 8px solid #e50f33;
+  border-top: 2px solid #e50f33;
 }
 
 .flex-gap {

@@ -29,94 +29,103 @@
       </div>
       <div class="order-section">
         <div
-          v-for="(item, idx) in this.$store.state.podsumowanie.zamowienia"
+          v-for="item in this.$store.state.podsumowanie.zamowienia"
           :key="item.id"
         >
-          <div
-            class="row g-0 order-item px-3"
-            :class="idx % 2 == 0 ? 'greyed' : ''"
-          >
-            <div class="col-1 d-flex align-items-center" style="color: #b0b0b0">
-              #{{ item.id }}
-            </div>
-            <div class="col-2 fw-bold d-flex">
-              <div class="d-flex align-items-center">
-                <i
-                  v-if="item.status == 'W trakcie'"
-                  style="color: #d000ff; font-size: 0.7rem"
-                  class="fa-solid fa-square pe-2"
-                ></i>
-                <i
-                  v-else-if="item.status == 'Anulowane'"
-                  style="color: #d11; font-size: 0.7rem"
-                  class="fa-solid fa-square pe-2"
-                ></i
-                ><i
-                  v-else-if="item.status == 'Gotowe'"
-                  style="color: #ffae00; font-size: 0.7rem"
-                  class="fa-solid fa-square pe-2"
-                ></i
-                ><i
-                  v-else-if="item.status == 'Odebrane'"
-                  style="color: #3eb000; font-size: 0.7rem"
-                  class="fa-solid fa-square pe-2"
-                ></i>
-                <p class="m-0">{{ item.status }}</p>
+          <div class="pt-3">
+            <div
+              class="row g-0 order-item px-3"
+              style="background: var(--dark-black)"
+            >
+              <div
+                class="col-1 d-flex align-items-center"
+                style="color: #b0b0b0"
+              >
+                #{{ item.id }}
               </div>
-            </div>
-            <div class="col-2 d-flex align-items-center">
-              {{ item.pozycje }}
-            </div>
-            <div
-              class="col-2 d-flex flex-column flex-wrap justify-content-center"
-            >
-              <p class="m-0">{{ item.data_zamowienia.split("T")[0] }}</p>
+              <div class="col-2 fw-bold d-flex">
+                <div class="d-flex align-items-center">
+                  <i
+                    v-if="item.status == 'W trakcie'"
+                    style="color: #d000ff; font-size: 0.7rem"
+                    class="fa-solid fa-square pe-2"
+                  ></i>
+                  <i
+                    v-else-if="item.status == 'Anulowane'"
+                    style="color: #d11; font-size: 0.7rem"
+                    class="fa-solid fa-square pe-2"
+                  ></i
+                  ><i
+                    v-else-if="item.status == 'Gotowe'"
+                    style="color: #ffae00; font-size: 0.7rem"
+                    class="fa-solid fa-square pe-2"
+                  ></i
+                  ><i
+                    v-else-if="item.status == 'Odebrane'"
+                    style="color: #3eb000; font-size: 0.7rem"
+                    class="fa-solid fa-square pe-2"
+                  ></i>
+                  <p class="m-0">{{ item.status }}</p>
+                </div>
+              </div>
+              <div class="col-2 d-flex align-items-center">
+                {{ item.pozycje }}
+              </div>
+              <div
+                class="col-2 d-flex flex-column flex-wrap justify-content-center"
+              >
+                <p class="m-0">{{ item.data_zamowienia.split("T")[0] }}</p>
 
-              <p class="fw-bold m-0" style="color: var(--basic-red)">
-                {{ item.data_zamowienia.split("T")[1].split(".")[0] }}
-              </p>
-            </div>
-            <div
-              class="col-2 d-flex flex-column flex-wrap justify-content-center"
-              v-if="item.data_wykonania"
-            >
-              <p class="m-0">{{ item.data_wykonania.split("T")[0] }}</p>
+                <p class="fw-bold m-0" style="color: var(--basic-red)">
+                  {{ item.data_zamowienia.split("T")[1].split(".")[0] }}
+                </p>
+              </div>
+              <div
+                class="col-2 d-flex flex-column flex-wrap justify-content-center"
+                v-if="item.data_wykonania"
+              >
+                <p class="m-0">{{ item.data_wykonania.split("T")[0] }}</p>
 
-              <p class="fw-bold m-0" style="color: var(--basic-red)">
-                {{ item.data_wykonania.split("T")[1].split(".")[0] }}
-              </p>
-            </div>
-            <div class="col-2 d-flex align-items-center" v-else>W trakcie</div>
-            <div class="col-1 d-flex align-items-center">
-              {{ Math.floor((item.czas_zamowienia / 60) % 60) }}m
-              {{ Math.floor(item.czas_zamowienia % 60) }}s
-            </div>
-            <div class="col-1 d-flex align-items-center">
-              {{ item.take_away }}
-            </div>
-            <div class="col-1 d-flex align-items-center justify-content-center">
-              <div class="btn-group">
-                <button
-                  class="btn btn-secondary btn-sm dropdown-toggle"
-                  type="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  Opcje
-                </button>
-                <ul class="dropdown-menu dropdown-menu-dark">
-                  <router-link
-                    :to="{ name: 'edit', query: { id: item.id } }"
-                    class="dropdown-item"
-                    >Edytuj</router-link
+                <p class="fw-bold m-0" style="color: var(--basic-red)">
+                  {{ item.data_wykonania.split("T")[1].split(".")[0] }}
+                </p>
+              </div>
+              <div class="col-2 d-flex align-items-center" v-else>
+                W trakcie
+              </div>
+              <div class="col-1 d-flex align-items-center">
+                {{ Math.floor((item.czas_zamowienia / 60) % 60) }}m
+                {{ Math.floor(item.czas_zamowienia % 60) }}s
+              </div>
+              <div class="col-1 d-flex align-items-center">
+                {{ item.take_away }}
+              </div>
+              <div
+                class="col-1 d-flex align-items-center justify-content-center"
+              >
+                <div class="btn-group">
+                  <button
+                    class="btn btn-secondary btn-sm dropdown-toggle"
+                    type="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
                   >
-                  <div
-                    class="dropdown-item bg-danger"
-                    @click="sendAlert('Usuwanie wpisów wyłączone')"
-                  >
-                    Usuń
-                  </div>
-                </ul>
+                    Opcje
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-dark">
+                    <router-link
+                      :to="{ name: 'edit', query: { id: item.id } }"
+                      class="dropdown-item"
+                      >Edytuj</router-link
+                    >
+                    <div
+                      class="dropdown-item bg-danger"
+                      @click="sendAlert('Usuwanie wpisów wyłączone')"
+                    >
+                      Usuń
+                    </div>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>

@@ -3,7 +3,7 @@ import { createStore } from "vuex";
 export default createStore({
   state: {
     updated: false,
-    apiURL: "https://projectburger.herokuapp.com/api/v1",
+    apiURL: "https://projectburger-eu.herokuapp.com/api/v1",
     // apiURL: "http://localhost:3000/api/v1",
     podsumowanie: {
       skladniki: {},

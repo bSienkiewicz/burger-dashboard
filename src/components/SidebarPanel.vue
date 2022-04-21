@@ -1,57 +1,72 @@
 <template>
   <div id="sidebar-container">
-    <!-- <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav> -->
     <div class="logo d-flex justify-content-center logo-head">
       <div
         v-if="windowWidth > 1480"
         class="d-flex justify-content-evenly align-items-center w-100"
       >
-        <img src="@/assets/pics/logo_long.png" width="150" alt="" />
-        <h5 class="m-0 px-3 py-2 fs-6 admin-flare">Admin</h5>
+        <img src="@/assets/pics/logo_min.png" width="40" alt="" />
+        <!-- <h5 class="m-0 px-3 py-2 fs-6 admin-flare">Admin</h5> -->
       </div>
 
       <img v-else src="@/assets/pics/logo_min.png" width="40" alt="" />
     </div>
 
     <div class="navigation d-flex flex-column flex-grow-1">
-      <router-link :to="{ name: 'home' }" class="d-flex align-items-center pt-5"
-        ><i class="fa-solid fa-house pe-3"></i>
-        <p class="m-0">Home</p></router-link
-      >
-      <h5 class="cat-separator">Przegląd</h5>
+      <router-link
+        :to="{ name: 'home' }"
+        class="d-flex align-items-center routerlink"
+        style="width: 50px; height: 50px"
+        ><i class="fa-solid fa-house"></i>
+        <!-- <p class="m-0">Home</p> -->
+      </router-link>
+      <!-- <h5 class="cat-separator">Przegląd</h5> -->
       <router-link
         :to="{ name: 'statystyki' }"
-        class="d-flex align-items-center"
-        ><i class="fa-solid fa-chart-pie pe-3"></i>
-        <p class="m-0">Statystyki</p></router-link
-      >
+        class="d-flex align-items-center routerlink"
+        style="width: 50px; height: 50px"
+        ><i class="fa-solid fa-chart-pie"></i>
+        <!-- <p class="m-0">Statystyki</p> -->
+      </router-link>
       <router-link
         :to="{ name: 'zamowienia' }"
-        class="d-flex align-items-center"
-        ><i class="fa-solid fa-burger pe-3"></i>
-        <p class="m-0">Zamówienia</p></router-link
-      >
-      <h5 class="cat-separator">Zarządzanie</h5>
-      <router-link :to="{ name: 'menu' }" class="d-flex align-items-center"
-        ><i class="fa-solid fa-utensils pe-3"></i>
-        <p class="m-0">Menu</p></router-link
-      >
-      <router-link :to="{}" class="d-flex align-items-center"
-        ><i class="fa-solid fa-boxes-stacked pe-3"></i>
-        <p class="m-0">Magazyn</p></router-link
-      >
-      <router-link :to="{ name: 'orderpanel' }" class="d-flex align-items-center"
-        ><i class="fa-solid fa-tv pe-3"></i><p class="m-0">Order Panel</p></router-link
-      >
-      <h5 class="cat-separator">Category 3</h5>
-      <router-link to="/d">Block 5</router-link>
+        class="d-flex align-items-center routerlink"
+        style="width: 50px; height: 50px"
+        ><i class="fa-solid fa-burger"></i>
+        <!-- <p class="m-0">Zamówienia</p> -->
+      </router-link>
+      <!-- <h5 class="cat-separator">Zarządzanie</h5> -->
+      <router-link
+        :to="{ name: 'menu' }"
+        class="d-flex align-items-center routerlink"
+        style="width: 50px; height: 50px"
+        ><i class="fa-solid fa-utensils"></i>
+        <!-- <p class="m-0">Menu</p> -->
+      </router-link>
+      <router-link :to="{}" class="d-flex align-items-center routerlink"
+        ><i class="fa-solid fa-boxes-stacked"></i>
+        <!-- <p class="m-0">Magazyn</p> -->
+      </router-link>
+      <router-link
+        :to="{ name: 'orderpanel' }"
+        class="d-flex align-items-center routerlink"
+        style="width: 50px; height: 50px"
+        ><i class="fa-solid fa-tv"></i>
+        <!-- <p class="m-0">Order Panel</p> -->
+      </router-link>
+      <!-- <h5 class="cat-separator">Category 3</h5> -->
+      <router-link
+        :to="{ name: 'orderpanel' }"
+        class="d-flex align-items-center routerlink"
+        style="width: 50px; height: 50px"
+        ><i class="fa-solid fa-question"></i>
+        <!-- <p class="m-0">Block</p> -->
+      </router-link>
     </div>
-    <div class="text-start d-flex align-items-center p-4 logout-section">
-      <h5>←</h5>
-      <h5 class="ps-4">Wyloguj</h5>
+    <div
+      class="text-start d-flex align-items-center justify-content-center p-4 logout-section"
+    >
+      <h5><i class="fa-solid fa-right-from-bracket"></i></h5>
     </div>
   </div>
 </template>
@@ -80,16 +95,18 @@ export default {
 <style lang="scss">
 #sidebar-container {
   height: 100vh;
-  min-width: 380px;
-  background: #01110b;
+  // min-width: 300px;
+  min-width: 100px;
+  width: 100px;
+  background: #121418;
   color: #fff;
   display: flex;
   flex-direction: column;
   z-index: 10 !important;
-  @media only screen and (max-width: 1480px) {
-    min-width: 120px;
-    width: 120px;
-  }
+  // @media only screen and (max-width: 1480px) {
+  //   min-width: 120px;
+  //   width: 120px;
+  // }
 
   // animation: 1s slide-in-left ease;
 }
@@ -106,8 +123,8 @@ export default {
 
 .navigation {
   overflow-y: auto;
-  align-items: flex-start;
-  padding-left: 50px;
+  align-items: center;
+  // padding-left: 50px;
   a {
     text-decoration: none;
     color: white;
@@ -123,11 +140,11 @@ export default {
       color: #e50f33;
     }
 
-    &::after {
-      content: "|||";
-      color: #e50f33;
-      padding-left: 19px;
-    }
+    // &::after {
+    //   content: "|||";
+    //   color: #e50f33;
+    //   padding-left: 19px;
+    // }
   }
 
   > * {
@@ -136,10 +153,16 @@ export default {
   }
 }
 
+.routerlink {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  justify-content: center;
+}
+
 .cat-separator {
   font-size: 1rem;
   margin-bottom: 0;
-  margin-top: 60px;
+  margin-top: 30px;
   color: gray;
   @media only screen and (max-width: 1480px) {
     display: none;
@@ -148,9 +171,13 @@ export default {
 
 .logout-section {
   background: #272928;
+  transition: 200ms all ease;
   cursor: pointer;
   > * {
     margin: 0;
+  }
+  &:hover {
+    background: #e50f33;
   }
 }
 

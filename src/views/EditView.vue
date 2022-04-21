@@ -42,8 +42,9 @@
             </div>
           </div>
           <div class="row" style="">
+            <div class="col-8"></div>
             <div
-              class="col-12 fw-bold py-2"
+              class="col-4 fw-bold py-2"
               style="
                 background: #8f8;
                 border-bottom-left-radius: 10px;

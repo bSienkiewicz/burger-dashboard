@@ -42,6 +42,8 @@ export default {
 
 :root {
   --basic-red: #e50f33;
+  --dark-black: #121418;
+  --light-black: #1d1f24;
 }
 
 @font-face {
@@ -63,9 +65,11 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
+  // color: #2c3e50;
+  color: white;
   font-family: PhysisMedium;
-  background: #f7f7f7;
+  // background: #f7f7f7;
+  background: #1b1f24;
 }
 
 #CONTENT-CONTAINER {
