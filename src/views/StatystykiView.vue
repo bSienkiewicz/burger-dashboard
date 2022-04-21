@@ -106,8 +106,8 @@
           <div class="col-xl-6 p-2">
             <div class="p-4" style="background: #121418">
               <h5 class="fw-bold">
-                Podsumowanie zamówień<span style="float: right" class="fs-6"
-                  ><router-link
+                Podsumowanie zamówień<span style="float: right" class="fs-6">
+                  <router-link
                     style="text-decoration: none; color: var(--basic-red)"
                     to="/zamowienia"
                     >Wyświetl wszystkie

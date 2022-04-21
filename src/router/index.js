@@ -17,9 +17,9 @@ const routes = [
     component: () => import("../views/ZamowieniaView.vue"),
   },
   {
-    path: "/orders/edit",
-    name: "edit",
-    component: () => import("../views/EditView.vue"),
+    path: "/orders/details",
+    name: "details",
+    component: () => import("../views/DetailsView.vue"),
   },
   {
     path: "/menu",

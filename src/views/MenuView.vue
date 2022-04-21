@@ -65,7 +65,7 @@
                   </button>
                   <ul class="dropdown-menu dropdown-menu-dark">
                     <router-link
-                      :to="{ name: 'edit', query: { id: item.id } }"
+                      :to="{ name: 'details', query: { id: item.id } }"
                       class="dropdown-item"
                       >Edytuj</router-link
                     >

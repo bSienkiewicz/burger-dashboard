@@ -1,67 +1,68 @@
 <template>
   <div id="top-bar" class="px-5 py-4">
-    <div
-      class="d-flex align-items-center justify-content-between"
-      v-if="this.update"
-    >
-      <div></div>
-      <Datepicker
-        v-model="date"
-        range
-        locale="pl"
-        selectText="Wybierz"
-        cancelText="Zamknij"
-        showNowButton
-        nowButtonLabel="Teraz"
-        :monthChangeOnScroll="true"
-        @update:modelValue="handleDate"
-        dark
-      >
-        <template #trigger>
-          <p
-            class="m-0 fw-bold align-self-middle"
-            style="
-              color: black;
-              padding: 8px;
-              background: white;
-              border-radius: 10px;
-              cursor: pointer;
-            "
-          >
-            <i
-              class="fa-regular fa-calendar px-2"
-              style="color: var(--basic-red)"
-            ></i
-            >{{ dateFilteringStart[2] }} {{ dateFilteringStart[1] }}
-            {{ dateFilteringStart[0] }} - {{ dateFilteringEnd[2] }}
-            {{ dateFilteringEnd[1] }} {{ dateFilteringEnd[0] }}
-          </p>
-        </template>
-      </Datepicker>
-      <p
-        style="float: right; color: black"
-        class="m-0 fw-bold"
-        id="refresh-status"
-        v-if="this.stateUpdating && !this.error"
-      >
-        Odświeżanie ...
-      </p>
-      <p
-        style="float: right; cursor: pointer"
-        class="text-danger m-0"
-        id="refresh-status"
-        @click.self="refreshState()"
-        v-else-if="this.stateUpdating && this.error"
-      ></p>
-      <p
-        style="float: right"
-        class="red-href m-0 fw-bold"
-        id="refresh-status"
-        @click.self="refreshState()"
-        v-else
-      >
-        Zaktualizowano
-      </p>
+    <div class="row w-100" v-if="this.update">
+      <div class="col"></div>
+      <div class="col-xl-3 col-md-6">
+        <Datepicker
+          v-model="date"
+          range
+          locale="pl"
+          selectText="Wybierz"
+          cancelText="Zamknij"
+          showNowButton
+          nowButtonLabel="Teraz"
+          :monthChangeOnScroll="true"
+          @update:modelValue="handleDate"
+          dark
+        >
+          <template #trigger>
+            <p
+              class="m-0 fw-bold align-self-middle"
+              style="
+                color: white;
+                padding: 8px;
+                background: var(--light-black);
+                border-radius: 10px;
+                cursor: pointer;
+              "
+            >
+              <i
+                class="fa-regular fa-calendar px-2"
+                style="color: var(--basic-red)"
+              ></i
+              >{{ dateFilteringStart[2] }} {{ dateFilteringStart[1] }}
+              {{ dateFilteringStart[0] }} - {{ dateFilteringEnd[2] }}
+              {{ dateFilteringEnd[1] }} {{ dateFilteringEnd[0] }}
+            </p>
+          </template>
+        </Datepicker>
+      </div>
+      <div class="col-2 d-flex align-items-center justify-content-end">
+        <p
+          style="color: black"
+          class="m-0 fw-bold"
+          id="refresh-status"
+          v-if="this.stateUpdating && !this.error"
+        >
+          Odświeżanie ...
+        </p>
+        <p
+          style="cursor: pointer"
+          class="text-danger m-0"
+          id="refresh-status"
+          @click.self="refreshState()"
+          v-else-if="this.stateUpdating && this.error"
+        ></p>
+        <p
+          style=""
+          class="red-href m-0 fw-bold"
+          id="refresh-status"
+          @click.self="refreshState()"
+          v-else
+        >
+          Zaktualizowano
+        </p>
+      </div>
     </div>
     <div class="" v-else>
       <p class="m-0 fw-bold" style="color: red">Aktualizacje wyłączone</p>

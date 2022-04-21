@@ -7,7 +7,7 @@
       <h5 class="pt-5 text-muted">Przegląd</h5>
       <div class="d-flex justify-content-middle flex-gap">
         <router-link to="/stats" class="p-4 home-item">
-          <h4>
+          <h4 class="pt-3">
             <i class="fa-solid fa-chart-pie text-red pe-3"></i> Statystyki
           </h4>
           <h5 style="font-family: PhysisThin" class="pt-4">
@@ -15,7 +15,9 @@
           </h5>
         </router-link>
         <router-link to="/orders" class="p-4 home-item">
-          <h4><i class="fa-solid fa-burger text-red pe-3"></i> Zamówienia</h4>
+          <h4 class="pt-3">
+            <i class="fa-solid fa-burger text-red pe-3"></i> Zamówienia
+          </h4>
           <h5 style="font-family: PhysisThin" class="pt-4">
             Sprawdź ostatnie zamówienia, edytuj oraz wprowadzaj zmiany
           </h5>
@@ -25,13 +27,15 @@
       <h5 class="pt-5 text-muted category-text">Zarządzanie</h5>
       <div class="d-flex justify-content-between flex-gap">
         <router-link to="/menu" class="p-4 home-item">
-          <h4><i class="fa-solid fa-utensils text-red pe-3"></i> Menu</h4>
+          <h4 class="pt-3">
+            <i class="fa-solid fa-utensils text-red pe-3"></i> Menu
+          </h4>
           <h5 style="font-family: PhysisThin" class="pt-4">
             Sprawdź ostatnie zamówienia, edytuj oraz wprowadzaj zmiany
           </h5>
         </router-link>
         <router-link to="/storage" class="p-4 home-item">
-          <h4>
+          <h4 class="pt-3">
             <i class="fa-solid fa-boxes-stacked text-red pe-3"></i> Magazyn
           </h4>
           <h5 style="font-family: PhysisThin" class="pt-4">
@@ -39,7 +43,9 @@
           </h5>
         </router-link>
         <router-link to="/orderpanel" class="p-4 home-item">
-          <h4><i class="fa-solid fa-tv text-red pe-3"></i> Order Panel</h4>
+          <h4 class="pt-3">
+            <i class="fa-solid fa-tv text-red pe-3"></i> Order Panel
+          </h4>
           <h5 style="font-family: PhysisThin" class="pt-4">
             Sprawdź ostatnie zamówienia, edytuj oraz wprowadzaj zmiany
           </h5>
@@ -62,12 +68,10 @@ a {
 }
 .home-item {
   background: var(--dark-black);
-  box-shadow: 0px 3px 5px 0px #181818;
   // border-radius: 5px;
   transition: 200ms all ease;
   &:hover {
     background: #e50f33;
-    box-shadow: 0px 5px 10px 0px rgb(13, 13, 13);
   }
   &:hover * {
     color: white;
