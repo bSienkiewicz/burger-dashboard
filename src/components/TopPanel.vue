@@ -71,9 +71,11 @@
 </template>
 
 <script>
+import Mixins from "@/Mixins";
 import { ref } from "vue";
 import axios from "axios";
 export default {
+  mixins: [Mixins],
   data() {
     const date = ref();
 
@@ -120,7 +122,7 @@ export default {
       if (!this.update || localStorage.getItem("filteredData") == null) return;
       this.stateUpdating = true;
       this.updateStateDates();
-      this.showSpinner(true);
+      Mixins.methods.showSpinner(true);
       this.$store.commit("setUpdated", false);
 
       axios
@@ -135,7 +137,7 @@ export default {
         .then(() => {
           // przypisz do zmiennych lokalnych wartości ze $store
           this.stateUpdating = false;
-          this.showSpinner(false);
+          Mixins.methods.showSpinner(false);
           setTimeout(() => {
             document.getElementById("refresh-status").innerHTML = "Odśwież";
           }, 3000);

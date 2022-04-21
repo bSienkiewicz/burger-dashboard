@@ -14,7 +14,7 @@
 
     <div class="navigation d-flex flex-column flex-grow-1">
       <router-link
-        :to="{ name: 'home' }"
+        :to="{ name: 'Dashboard' }"
         class="d-flex align-items-center routerlink"
         style="width: 50px; height: 50px"
         ><i class="fa-solid fa-house"></i>
@@ -22,14 +22,14 @@
       </router-link>
       <!-- <h5 class="cat-separator">Przegląd</h5> -->
       <router-link
-        :to="{ name: 'statystyki' }"
+        :to="{ name: 'Statystyki' }"
         class="d-flex align-items-center routerlink"
         style="width: 50px; height: 50px"
         ><i class="fa-solid fa-chart-pie"></i>
         <!-- <p class="m-0">Statystyki</p> -->
       </router-link>
       <router-link
-        :to="{ name: 'zamowienia' }"
+        :to="{ name: 'Zamówienia' }"
         class="d-flex align-items-center routerlink"
         style="width: 50px; height: 50px"
         ><i class="fa-solid fa-burger"></i>
@@ -37,7 +37,7 @@
       </router-link>
       <!-- <h5 class="cat-separator">Zarządzanie</h5> -->
       <router-link
-        :to="{ name: 'menu' }"
+        :to="{ name: 'Menu' }"
         class="d-flex align-items-center routerlink"
         style="width: 50px; height: 50px"
         ><i class="fa-solid fa-utensils"></i>
@@ -48,7 +48,7 @@
         <!-- <p class="m-0">Magazyn</p> -->
       </router-link>
       <router-link
-        :to="{ name: 'orderpanel' }"
+        :to="{ name: 'Panel pracowniczy' }"
         class="d-flex align-items-center routerlink"
         style="width: 50px; height: 50px"
         ><i class="fa-solid fa-tv"></i>
@@ -56,7 +56,7 @@
       </router-link>
       <!-- <h5 class="cat-separator">Category 3</h5> -->
       <router-link
-        :to="{ name: 'orderpanel' }"
+        :to="{ name: 'Panel pracowniczy' }"
         class="d-flex align-items-center routerlink"
         style="width: 50px; height: 50px"
         ><i class="fa-solid fa-question"></i>

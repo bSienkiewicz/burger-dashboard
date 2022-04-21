@@ -2,9 +2,9 @@
   <div id="CONTENT-CONTAINER">
     <div
       class=""
-      style="height: 100%; overflow-y: auto; padding: 50px; font-size: 1.1rem"
+      style="height: 100%; overflow-y: auto; padding: 40px; font-size: 1.1rem"
     >
-      <h1 class="m-0">Zamówienia</h1>
+      <h1 class="m-0 titleUni">Zamówienia</h1>
       <p class="text-muted" v-if="this.$store.state.updated">
         Wynik filtrowania:
         {{ this.$store.state.podsumowanie.zamowienia.length }} zamówień
@@ -29,12 +29,14 @@
       </div>
       <div class="order-section">
         <div
-          v-for="item in this.$store.state.podsumowanie.zamowienia"
+          v-for="item in reverseArray(
+            this.$store.state.podsumowanie.zamowienia
+          )"
           :key="item.id"
         >
           <div class="pt-3">
             <router-link
-              :to="{ name: 'details', query: { id: item.id } }"
+              :to="{ name: 'Szczegóły', query: { id: item.id } }"
               style="text-decoration: none; color: inherit"
             >
               <div
@@ -130,13 +132,11 @@ export default {
       );
       return item;
     },
+    reverseArray(array) {
+      return array.slice().reverse();
+    },
   },
-  computed: {
-    // reverseArray() {
-    //   let arr = this.$store.state.podsumowanie.zamowienia;
-    //   return arr.reverse();
-    // },
-  },
+  computed: {},
 };
 </script>
 

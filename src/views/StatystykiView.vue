@@ -2,7 +2,7 @@
   <div id="CONTENT-CONTAINER">
     <div class="" style="height: 100%; overflow-y: auto; padding: 40px">
       <div class="header-container">
-        <h1 class="m-0">Podsumowanie</h1>
+        <h1 class="m-0 titleUni">Statystyki</h1>
       </div>
 
       <div class="d-flex w-100 pt-3" style="" id="STATS-BAR">
@@ -108,8 +108,8 @@
               <h5 class="fw-bold">
                 Podsumowanie zamówień<span style="float: right" class="fs-6">
                   <router-link
+                    :to="{ name: 'Zamówienia' }"
                     style="text-decoration: none; color: var(--basic-red)"
-                    to="/zamowienia"
                     >Wyświetl wszystkie
                     <i class="fa-solid fa-chevron-right"></i></router-link
                 ></span>
@@ -169,24 +169,28 @@
                   <div class="col-2 text-center">
                     {{ item.pozycje.split(",").length }}
                   </div>
-                  <div class="col-3">
+                  <div class="col-3 d-flex align-items-center">
                     <i
-                      class="fa-solid fa-square"
-                      style="color: blue"
                       v-if="item.status == 'W trakcie'"
+                      style="color: #d000ff; font-size: 0.7rem"
+                      class="fa-solid fa-square pe-2"
                     ></i>
                     <i
-                      class="fa-solid fa-square"
-                      style="color: orange"
+                      v-else-if="item.status == 'Anulowane'"
+                      style="color: #d11; font-size: 0.7rem"
+                      class="fa-solid fa-square pe-2"
+                    ></i
+                    ><i
                       v-else-if="item.status == 'Gotowe'"
-                    ></i>
-                    <i
-                      class="fa-solid fa-square"
-                      style="color: green"
+                      style="color: #ffae00; font-size: 0.7rem"
+                      class="fa-solid fa-square pe-2"
+                    ></i
+                    ><i
                       v-else-if="item.status == 'Odebrane'"
+                      style="color: #3eb000; font-size: 0.7rem"
+                      class="fa-solid fa-square pe-2"
                     ></i>
-                    <i class="fa-solid fa-square" style="color: red" v-else></i>
-                    {{ item.status }}
+                    <p class="m-0">{{ item.status }}</p>
                   </div>
                   <div class="col-2">{{ item.kwota.toFixed(2) }}zł</div>
                   <div class="col-2">
@@ -201,7 +205,7 @@
           </div>
 
           <div class="col-xl-6 p-2">
-            <div class="p-4" style="background: #121418; border-radius: 10px">
+            <div class="p-4" style="background: #121418">
               <h5 class="fw-bold">
                 Drugi baner<span style="float: right" class="fs-6"
                   ><router-link

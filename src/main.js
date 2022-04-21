@@ -19,6 +19,13 @@ dom.watch();
 createApp(App)
   .use(router)
   .use(store)
+  .mixin({
+    methods: {
+      showLoader(show) {
+        console.log(show);
+      },
+    },
+  })
   .component("Datepicker", Datepicker)
   .component("font-awesome-icon", FontAwesomeIcon)
   .mount("#app");

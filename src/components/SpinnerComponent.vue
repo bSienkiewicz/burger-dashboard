@@ -11,9 +11,9 @@ export default {};
 <style lang="scss">
 #SPINNER {
   position: absolute;
-  width: 70px;
-  height: 70px;
-  background-color: #fde2e7;
+  width: 50px;
+  height: 50px;
+  background-color: var(--dark-black);
   margin-left: auto;
   margin-right: auto;
   top: 0px;
@@ -33,12 +33,12 @@ export default {};
   position: absolute;
   transition: all cubic-bezier(0.23, 1, 0.32, 1) 500ms;
   color: #e50f33;
-  font-size: 40px;
+  font-size: 35px;
   opacity: 1;
 }
 
 .spinner-icon-anim {
-  animation: 0.5s spin linear infinite;
+  animation: 0.65s spin linear infinite;
 }
 
 #SPINNER.--hidden {

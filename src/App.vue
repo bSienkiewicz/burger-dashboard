@@ -61,6 +61,10 @@ export default {
   src: url("@/assets/fonts/RNSPhysis-Light.ttf");
 }
 
+@font-face {
+  font-family: UniSans;
+  src: url("@/assets/fonts/UniSansHeavyIt.otf");
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -78,6 +82,10 @@ export default {
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+}
+
+.titleUni {
+  font-family: UniSans;
 }
 
 nav {

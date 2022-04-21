@@ -2,9 +2,9 @@
   <div id="CONTENT-CONTAINER">
     <div
       class=""
-      style="height: 100%; overflow-y: auto; padding: 50px; font-size: 1.1rem"
+      style="height: 100%; overflow-y: auto; padding: 40px; font-size: 1.1rem"
     >
-      <h1 class="m-0">Menu</h1>
+      <h1 class="m-0 titleUni">Menu</h1>
       <p class="text-muted" v-if="this.$store.state.updated">
         Wynik filtrowania:
         {{ this.$store.state.podsumowanie.menu.length }} pozycji
@@ -65,7 +65,7 @@
                   </button>
                   <ul class="dropdown-menu dropdown-menu-dark">
                     <router-link
-                      :to="{ name: 'details', query: { id: item.id } }"
+                      :to="{ name: 'Szczegóły', query: { id: item.id } }"
                       class="dropdown-item"
                       >Edytuj</router-link
                     >
