@@ -16,7 +16,7 @@
 
         <div class="pt-5 w-50">
           <div class="p-4" style="background: var(--dark-black)">
-            <h5 class="">Pozycje na zamówieniu:</h5>
+            <h5 class="" show>Pozycje na zamówieniu:</h5>
             <div class="">
               <div
                 class="row px-3 text-muted fw-bold py-2 g-0"

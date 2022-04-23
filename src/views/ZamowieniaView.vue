@@ -133,7 +133,9 @@ export default {
       return item;
     },
     reverseArray(array) {
-      return array.slice().reverse();
+      if (localStorage.getItem("filteredData") === null) {
+        console.log("Null localstorage");
+      } else return array.slice().reverse();
     },
   },
   computed: {},
