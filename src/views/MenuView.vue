@@ -11,40 +11,22 @@
       </p>
 
 
-      <nav class="navbar navbar-expand-lg navbar-light bg-secondary"
-                 style="
-                color: #b0b0b0;
-                font-weight: bold;
-                border-bottom: 1px solid #b0b0b0;
-                font-size: 0.9rem;
-              "
-      >
-        <div class="dropdown">
-          <button class="btn btn-secondary p-0" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="fa-solid fa-filter" style="color: red;font-size: 30px"></i>
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </div>
-
+      <nav class="navbar navbar-expand-lg">
         <div class="collapse navbar-collapse" id="navbarTogglerDemo03"
         style="display: flex;
                flex-direction: row;"
         >
-          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled" href="#">Disabled</a>
-            </li>
-          </ul>
+          <div class="dropdown">
+            <button class="btn btn-secondary p-0 shadow-none" type="button" id="filter-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fa-solid fa-filter"></i>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="filter-dropdown">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </div>
+
           <form class="form-inline my-2 my-lg-0"
           style="display: flex;
                  flex-direction: row;
@@ -52,11 +34,9 @@
                  right: 30px;
                  "
           >
-            <input class="form-control me-sm-2" type="search" placeholder="Czego szukasz chłoptasiu" aria-label="Search"
+            <input class="form-control me-sm-2 shadow-none" type="search" placeholder="Czego szukasz chłoptasiu" aria-label="Search"
             style="width: 20em">
-            <button class="btn my-2 my-sm-0" type="submit"
-            style="background: var(--basic-red);
-                    ">
+            <button class="btn my-2 my-sm-0 shadow-none lupka" type="submit">
               <i class="fa-solid fa-magnifying-glass"></i>
             </button>
           </form>
@@ -151,16 +131,48 @@
 .ser::after {
   content: ",\00a0";
 }
+
 .ser:last-child::after {
   content: "";
 }
+
 .order-section {
   height: 80%;
   overflow-y: auto;
   font-size: 0.9rem;
 }
+
 .order-item {
   padding-top: 20px;
   padding-bottom: 20px;
 }
+
+.navbar{
+  color: #b0b0b0 !important;
+  background-color: #121418;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.navbar a{
+  color: #6c757d;
+}
+
+.lupka{
+  background: var(--basic-red);
+}
+
+/*filtr*/
+#filter-dropdown{
+  transition: 0.5s all ease;
+  font-size: 25px;
+  width: 37.5px;
+  border: none;
+}
+
+#filter-dropdown:hover{
+  color: red;
+  background: var(--dark-black);
+}
+
 </style>
