@@ -1,11 +1,13 @@
 <template>
-  <div
-    id="CONTENT-CONTAINER"
-    style="justify-content: center; align-items: center"
-  >
-    <button class="ok-loadpanel" @click="showApp">
-      Wciśnij by załadować panel zamówień
-    </button>
+  <div id="CONTENT-CONTAINER">
+    <div
+      class=""
+      style="height: 100%; overflow-y: auto; padding: 40px; font-size: 1.1rem"
+    >
+      <button class="ok-loadpanel" @click="showApp()">
+        Wciśnij by załadować panel zamówień
+      </button>
+    </div>
   </div>
 </template>
 
@@ -13,7 +15,8 @@
 export default {
   methods: {
     showApp() {
-      document.getElementById("orders-app").classList.remove("d-none");
+      let panel = document.getElementById("OrderTest");
+      panel.classList.toggle("hidden");
     },
   },
 };

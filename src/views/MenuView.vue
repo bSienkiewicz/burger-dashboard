@@ -69,7 +69,14 @@
               style="background: var(--dark-black)"
             >
               <div class="col-1">{{ item.id }}</div>
-              <div class="col-1"></div>
+              <div class="col-1">
+                <img
+                  src="https://drive.google.com/thumbnail?id=18J2BP9cblA_xDZZG5F5yVNiInjn9AL2E"
+                  class="mini-img"
+                  alt=""
+                  width="100"
+                />
+              </div>
               <div class="col-2">{{ item.nazwa }}</div>
               <div class="col-1">{{ item.rodzaj }}</div>
               <div class="col-1">{{ item.cena.toFixed(2) }}zł</div>

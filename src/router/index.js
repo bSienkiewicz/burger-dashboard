@@ -27,6 +27,11 @@ const routes = [
     component: () => import("../views/MenuView.vue"),
   },
   {
+    path: "/menu/add",
+    name: "Dodaj Menu",
+    component: () => import("../views/AddMenuView.vue"),
+  },
+  {
     path: "/orderpanel",
     name: "Panel pracowniczy",
     component: () => import("../views/OrderView.vue"),

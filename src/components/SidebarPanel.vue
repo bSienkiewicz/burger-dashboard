@@ -1,15 +1,12 @@
 <template>
   <div id="sidebar-container">
     <div class="logo d-flex justify-content-center logo-head">
-      <div
-        v-if="windowWidth > 1480"
-        class="d-flex justify-content-evenly align-items-center w-100"
+      <router-link :to="{ name: 'Dashboard' }">
+        <div class="d-flex justify-content-evenly align-items-center w-100">
+          <img src="@/assets/pics/logo_min.png" width="40" alt="" />
+          <!-- <h5 class="m-0 px-3 py-2 fs-6 admin-flare">Admin</h5> -->
+        </div></router-link
       >
-        <img src="@/assets/pics/logo_min.png" width="40" alt="" />
-        <!-- <h5 class="m-0 px-3 py-2 fs-6 admin-flare">Admin</h5> -->
-      </div>
-
-      <img v-else src="@/assets/pics/logo_min.png" width="40" alt="" />
     </div>
 
     <div class="navigation d-flex flex-column flex-grow-1">

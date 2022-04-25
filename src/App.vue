@@ -1,5 +1,6 @@
 <template>
   <div id="app-interface" class="d-flex">
+    <ToastMessage class="d-none" />
     <SidebarPanel />
     <div class="d-flex flex-column flex-grow-1" style="position: relative">
       <SpinnerComponent />
@@ -12,6 +13,7 @@
 </template>
 
 <script>
+import ToastMessage from "@/components/ToastMessage.vue";
 import SidebarPanel from "./components/SidebarPanel.vue";
 import SpinnerComponent from "./components/SpinnerComponent.vue";
 import TopPanel from "./components/TopPanel.vue";
@@ -21,6 +23,7 @@ export default {
     SidebarPanel,
     SpinnerComponent,
     TopPanel,
+    ToastMessage,
   },
   setup() {},
   mounted() {
@@ -76,6 +79,16 @@ export default {
   background: #1b1f24;
 }
 
+.bg-lblack {
+  background: var(--light-black) !important;
+  color: white !important;
+}
+
+.bg-dblack {
+  background: var(--dark-black) !important;
+  color: white !important;
+}
+
 #CONTENT-CONTAINER {
   width: 100%;
   flex-grow: 1;
@@ -117,6 +130,6 @@ nav a.router-link-exact-active {
   color: #e50f33;
 }
 .bg-red {
-  background: #e50f33;
+  background: #e50f33 !important;
 }
 </style>
