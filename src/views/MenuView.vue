@@ -9,7 +9,6 @@
         Wynik filtrowania:
         {{ this.$store.state.podsumowanie.menu.length }} pozycji
       </p>
-
       <div
         class="row mt-5 g-0 px-3"
         style="
@@ -109,6 +108,7 @@ export default {
     };
 
     return {
+      sortingTab: "",
       iloscZamowien: 0,
       dateFilteringStart: [],
       dateFilteringEnd: [],
@@ -120,12 +120,10 @@ export default {
       update: true,
       stateUpdating: false,
       error: false,
-      apiURL: "https://projectburger.herokuapp.com",
       date,
       handleDate,
     };
   },
-  name: "PodsumowanieView",
   methods: {
     getLocalStorage() {
       // sprawdź czy localStorage puste

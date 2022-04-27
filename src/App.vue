@@ -30,6 +30,17 @@ export default {
     window.onload = () => {
       // document.getElementById("LOADER-COMPONENT").classList.add("d-none");
     };
+    this.parseUserData();
+  },
+  methods: {
+    parseUserData() {
+      // let userD = JSON.parse(
+      //   window.atob(localStorage.getItem("jwt").split(".")[1])
+      // );
+      // this.$store.state.user = userD;
+      console.log(this.$store.state.user);
+      localStorage.setItem("user", JSON.stringify(this.$store.state.user));
+    },
   },
 };
 </script>
@@ -47,6 +58,31 @@ export default {
   --basic-red: #e50f33;
   --dark-black: #121418;
   --light-black: #1d1f24;
+}
+
+.input-pb {
+  padding: 10px;
+  background: #2f343b;
+  outline: none;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  box-shadow: 0px 5px 7px 0px #15181c;
+}
+
+.button-pb {
+  padding-left: 25px;
+  padding-right: 25px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background: var(--basic-red);
+  color: white;
+  border: none;
+  box-shadow: 0px 5px 7px 0px #15181c;
+  transition: all 0.2s ease;
+  &:hover {
+    box-shadow: 0px 8px 15px 0px #101316;
+  }
 }
 
 @font-face {

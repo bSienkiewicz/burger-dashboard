@@ -1,9 +1,13 @@
 import { createStore } from "vuex";
 
-export default createStore({
+const store = createStore({
   state: {
     updated: false,
-    apiURL: "https://projectburger-eu.herokuapp.com/api/v1",
+    user:
+      localStorage.getItem("jwt") != null
+        ? JSON.parse(window.atob(localStorage.getItem("jwt").split(".")[1]))
+        : null,
+    apiURL: "https://projectburger.herokuapp.com/api/v1",
     // apiURL: "http://localhost:3000/api/v1",
     podsumowanie: {
       skladniki: {},
@@ -50,6 +54,7 @@ export default createStore({
       state.podsumowanie.filterDateEnd = payload.dateEnd;
       console.log("[INFO] Zaktualizowano filtry...");
     },
+
     setTopStats(state) {
       let wartoscZamowien = 0;
       let srIloscPozycji = 0;
@@ -71,7 +76,13 @@ export default createStore({
         zamowienia,
       ];
     },
+
+    setUser(state, user) {
+      state.user = user;
+    },
   },
   actions: {},
   modules: {},
 });
+
+export default store;

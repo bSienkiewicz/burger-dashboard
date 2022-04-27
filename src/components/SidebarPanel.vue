@@ -1,9 +1,9 @@
 <template>
-  <div id="sidebar-container">
+  <div id="sidebar-container" :show="getLocalStorageJWT()">
     <div class="logo d-flex justify-content-center logo-head">
       <router-link :to="{ name: 'Dashboard' }">
         <div class="d-flex justify-content-evenly align-items-center w-100">
-          <img src="@/assets/pics/logo_min.png" width="40" alt="" />
+          <img src="@/assets/images/logo_min.png" width="40" alt="" />
           <!-- <h5 class="m-0 px-3 py-2 fs-6 admin-flare">Admin</h5> -->
         </div></router-link
       >
@@ -62,6 +62,7 @@
     </div>
     <div
       class="text-start d-flex align-items-center justify-content-center p-4 logout-section"
+      @click="logout()"
     >
       <h5><i class="fa-solid fa-right-from-bracket"></i></h5>
     </div>
@@ -85,27 +86,37 @@ export default {
       if (this.windowWidth < 1480) return true;
       else return false;
     },
+    logout() {
+      this.$store.state.user = null;
+      localStorage.removeItem("jwt");
+      window.location.reload();
+    },
+    getLocalStorageJWT() {
+      // sprawdź czy localStorage puste
+      if (localStorage.getItem("jwt") === null) {
+        return false;
+      } else return true;
+    },
   },
 };
 </script>
 
 <style lang="scss">
 #sidebar-container {
+  display: flex;
+  position: relative;
   height: 100vh;
-  // min-width: 300px;
   min-width: 100px;
   width: 100px;
+  left: 0;
   background: #121418;
   color: #fff;
-  display: flex;
   flex-direction: column;
   z-index: 10 !important;
-  // @media only screen and (max-width: 1480px) {
-  //   min-width: 120px;
-  //   width: 120px;
-  // }
-
-  // animation: 1s slide-in-left ease;
+  -webkit-animation: slide 0.5s forwards;
+  -webkit-animation-delay: 2s;
+  animation: slide 0.5s forwards;
+  animation-delay: 2s;
 }
 
 .logo-head {
@@ -136,12 +147,6 @@ export default {
     * {
       color: #e50f33;
     }
-
-    // &::after {
-    //   content: "|||";
-    //   color: #e50f33;
-    //   padding-left: 19px;
-    // }
   }
 
   > * {
@@ -185,5 +190,15 @@ export default {
   100% {
     transform: translateX(0%);
   }
+}
+
+div[show="false"] {
+  left: -100px !important;
+  display: none !important;
+}
+
+div[show="true"] {
+  left: 0px !important;
+  display: flex !important;
 }
 </style>

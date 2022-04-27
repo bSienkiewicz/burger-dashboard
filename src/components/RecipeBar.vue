@@ -24,13 +24,13 @@
           </div>
           <div class="r-side">
             <div class="price-tag p-2 button-52 titleUni">
-              <!-- <h4 class="m-0 d-inline fs-4">
-                {{ cena.toFixed(2).split(".")[0] }}
+              <h4 class="m-0 d-inline fs-4">
+                {{ cena.split(".")[0] }}
               </h4>
               <h4 class="m-0 d-inline align-top fs-6">
-                {{ cena.toFixed(2).split(".")[1] }}
-              </h4> -->
-              <h4 class="m-0">{{ cena }}</h4>
+                {{ cena.split(".")[1] }}
+              </h4>
+              <!-- <h4 class="m-0">{{ cena }}</h4> -->
             </div>
             <div class=""></div>
           </div>

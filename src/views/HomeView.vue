@@ -3,7 +3,7 @@
     <div
       style="height: 100%; overflow-y: auto; padding: 40px; font-size: 1.1rem"
     >
-      <h1 class="m-0 titleUni">Witaj</h1>
+      <h1 class="m-0 titleUni">Witaj, {{ getImie() }}</h1>
       <h5 class="pt-5 text-muted">Przegląd</h5>
       <div class="d-flex justify-content-middle flex-gap">
         <router-link to="/stats" class="p-4 home-item">
@@ -58,6 +58,11 @@
 <script>
 export default {
   name: "HomeView",
+  methods: {
+    getImie() {
+      if (this.$store.state.user != null) return this.$store.state.user.imie;
+    },
+  },
 };
 </script>
 

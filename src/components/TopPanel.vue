@@ -1,7 +1,27 @@
 <template>
-  <div id="top-bar" class="px-5 py-4">
-    <div class="row w-100" v-if="this.update">
-      <div class="col"></div>
+  <div
+    id="top-bar"
+    class="px-5 py-4"
+    :show="getLocalStorageJWT()"
+    v-if="this.$store.state.user != null"
+  >
+    <div
+      class="d-flex align-items-center justify-content-start row w-100"
+      v-if="this.update"
+    >
+      <div class="col d-flex align-items-center">
+        <div class="me-3" :style="styles"></div>
+        <p class="m-0 fw-bold">
+          {{ this.$store.state.user.imie }}
+          {{ this.$store.state.user.nazwisko }}
+        </p>
+        <div
+          class="fw-bold py-1 px-3 ms-3 text-uppercase"
+          style="background-color: var(--basic-red)"
+        >
+          {{ this.$store.state.user.rola }}
+        </div>
+      </div>
       <div class="col-xl-3 col-md-6">
         <Datepicker
           v-model="date"
@@ -37,7 +57,7 @@
           </template>
         </Datepicker>
       </div>
-      <div class="col-2 d-flex align-items-center justify-content-end">
+      <div class="col-2 d-flex justify-content-end">
         <p
           style="color: black"
           class="m-0 fw-bold"
@@ -99,6 +119,16 @@ export default {
   mounted() {
     this.refreshState(); // odśwież stan aplikacji po zamontowaniu komponentu
   },
+  computed: {
+    styles() {
+      return {
+        height: `30px`,
+        width: `30px`,
+        "border-radius": "90px",
+        "background-image": `url(https://avatars.dicebear.com/api/jdenticon/${this.$store.state.user.username}.svg)`,
+      };
+    },
+  },
   methods: {
     updateStateDates() {
       let dateStart = new Date(
@@ -119,17 +149,32 @@ export default {
     },
     refreshState() {
       // zaktualizuj stan tylko jeśli localStorage nie jest pusty
-      if (!this.update || localStorage.getItem("filteredData") == null) return;
+      if (
+        !this.update ||
+        localStorage.getItem("filteredData") == null ||
+        localStorage.getItem("jwt") == null
+      )
+        return;
+
       this.stateUpdating = true;
       this.updateStateDates();
       Mixins.methods.showSpinner(true);
       this.$store.commit("setUpdated", false);
 
+      const headers = {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      };
+
       axios
         .get(
-          `${this.$store.state.apiURL}/get/all?dateStart=${this.$store.state.podsumowanie.filterDateStart}&dateEnd=${this.$store.state.podsumowanie.filterDateEnd}`
+          `${process.env.VUE_APP_API_URL}/get/all?dateStart=${this.$store.state.podsumowanie.filterDateStart}&dateEnd=${this.$store.state.podsumowanie.filterDateEnd}`,
+          {
+            headers: headers,
+          }
         )
         .then((res) => {
+          // zaktualizuj zmienne w store
           this.$store.commit("setAllFresh", res);
           this.$store.commit("setTopStats");
           this.$store.commit("setUpdated", true);
@@ -143,6 +188,13 @@ export default {
           }, 3000);
         })
         .catch((err) => {
+          // jeśli jwt się nie zgadza
+          if (err.response.status == 403 || err.response.status == 401) {
+            this.$store.state.user = null;
+            localStorage.removeItem("jwt");
+            window.location.reload();
+          }
+          // wyłącz spinner i powiadom o błędzie
           this.stateUpdating = false;
           this.showSpinner(false);
           setTimeout(() => {
@@ -150,7 +202,6 @@ export default {
               "BŁĄD ODŚWIEŻANIA";
           }, 500);
           this.error = true;
-          throw err;
         });
     },
 
@@ -159,9 +210,9 @@ export default {
       window.location.reload(true);
     },
 
-    getLocalStorage() {
+    getLocalStorageJWT() {
       // sprawdź czy localStorage puste
-      if (localStorage.getItem("filteredData") === null) {
+      if (localStorage.getItem("jwt") === null) {
         return false;
       } else return true;
     },
@@ -185,16 +236,22 @@ export default {
 
 <style lang="scss">
 #top-bar {
+  z-index: 10;
+  top: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 5vh;
-  width: 100%;
+  height: 55px;
   background-color: var(--dark-black);
   transition: 1s all ease;
 }
 
 .--loading {
   background-color: #e50f33 !important;
+}
+
+div[show="false"] {
+  top: -50px !important;
+  display: none !important;
 }
 </style>
