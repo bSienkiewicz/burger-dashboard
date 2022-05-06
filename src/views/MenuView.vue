@@ -9,8 +9,15 @@
         Wynik filtrowania:
         {{ this.$store.state.podsumowanie.menu.length }} pozycji
       </p>
+      <div class="d-flex">
+        <div class="flex-grow-1"></div>
+        <router-link :to="{ name: 'Dodaj Menu' }" class="button-pb" style="">
+          <i class="fa-solid fa-square-plus"></i> Dodaj pozycję
+        </router-link>
+      </div>
+
       <div
-        class="row mt-5 g-0 px-3"
+        class="row mt-3 g-0 px-3"
         style="
           color: #b0b0b0;
           font-weight: bold;
@@ -20,10 +27,10 @@
       >
         <div class="col-1">ID</div>
         <div class="col-1">Wygląd</div>
-        <div class="col-2">Nazwa</div>
         <div class="col-1">Kategoria</div>
-        <div class="col-1">Cena</div>
+        <div class="col-2">Nazwa</div>
         <div class="col-4">Skład</div>
+        <div class="col-1">Cena</div>
         <div class="col-1">Gramatura</div>
         <div class="col-1">Opcje</div>
       </div>
@@ -37,15 +44,15 @@
               <div class="col-1">{{ item.id }}</div>
               <div class="col-1">
                 <img
-                  src="https://drive.google.com/thumbnail?id=18J2BP9cblA_xDZZG5F5yVNiInjn9AL2E"
+                  loading="lazy"
+                  :src="item.miniatura"
                   class="mini-img"
                   alt=""
                   width="100"
                 />
               </div>
-              <div class="col-2">{{ item.nazwa }}</div>
               <div class="col-1">{{ item.rodzaj }}</div>
-              <div class="col-1">{{ item.cena.toFixed(2) }}zł</div>
+              <div class="col-2 fw-bold">{{ item.nazwa }}</div>
               <div class="col-4 d-flex flex-wrap align-items-center">
                 <!-- TODO: Wyrównać składniki -->
                 <p
@@ -55,6 +62,10 @@
                 >
                   {{ skladnik }}
                 </p>
+              </div>
+              <div class="col-1">
+                <span class="fw-bold text-red">{{ item.cena.toFixed(2) }}</span
+                >zł
               </div>
               <div class="col-1">{{ item.waga }}</div>
               <div
@@ -155,9 +166,9 @@ export default {
   content: "";
 }
 .order-section {
-  height: 80%;
+  height: 75%;
   overflow-y: auto;
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 .order-item {
   padding-top: 20px;

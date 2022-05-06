@@ -5,10 +5,12 @@
         <div class="h-100 w-25">
           <!-- <img :src="getimg()" alt="" class="mini-img" /> -->
           <img
-            src="https://drive.google.com/thumbnail?id=18J2BP9cblA_xDZZG5F5yVNiInjn9AL2E"
+            v-if="mini == ''"
+            src="https://res.cloudinary.com/dootio/image/upload/e_grayscale/v1651873284/miniatury/default_burg_mini.png"
             class="mini-img"
             alt=""
           />
+          <img v-else :src="mini" class="mini-img" alt="" />
         </div>
         <div class="d-flex w-75 p-3">
           <div class="flex-column w-75 flex-grow-1">
@@ -25,10 +27,10 @@
           <div class="r-side">
             <div class="price-tag p-2 button-52 titleUni">
               <h4 class="m-0 d-inline fs-4">
-                {{ cena.split(".")[0] }}
+                {{ Number(cena).toFixed(2).split(".")[0] }}
               </h4>
               <h4 class="m-0 d-inline align-top fs-6">
-                {{ cena.split(".")[1] }}
+                {{ Number(cena).toFixed(2).split(".")[1] }}
               </h4>
               <!-- <h4 class="m-0">{{ cena }}</h4> -->
             </div>
@@ -47,7 +49,7 @@ export default {
       skladnikiString: "",
     };
   },
-  props: ["rodzaj", "nazwa", "waga", "cena", "skladniki"],
+  props: ["rodzaj", "nazwa", "waga", "cena", "skladniki", "mini"],
   computed: {},
   methods: {
     getimg() {
@@ -60,7 +62,7 @@ export default {
     },
     subitems(arr) {
       let nameArr = [];
-      console.log(arr);
+      // console.log(arr);
       arr.sort().forEach((el) => {
         try {
           nameArr.push(

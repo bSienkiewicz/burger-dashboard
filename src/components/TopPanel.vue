@@ -168,7 +168,7 @@ export default {
 
       axios
         .get(
-          `${process.env.VUE_APP_API_URL}/get/all?dateStart=${this.$store.state.podsumowanie.filterDateStart}&dateEnd=${this.$store.state.podsumowanie.filterDateEnd}`,
+          `${process.env.VUE_APP_API_URL}/all?dateStart=${this.$store.state.podsumowanie.filterDateStart}&dateEnd=${this.$store.state.podsumowanie.filterDateEnd}`,
           {
             headers: headers,
           }
@@ -189,7 +189,9 @@ export default {
         })
         .catch((err) => {
           // jeśli jwt się nie zgadza
-          if (err.response.status == 403 || err.response.status == 401) {
+          if (err.response == undefined) {
+            console.log("???");
+          } else if (err.response.status == 403 || err.response.status == 401) {
             this.$store.state.user = null;
             localStorage.removeItem("jwt");
             window.location.reload();

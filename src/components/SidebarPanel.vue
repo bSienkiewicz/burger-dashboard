@@ -40,10 +40,6 @@
         ><i class="fa-solid fa-utensils"></i>
         <!-- <p class="m-0">Menu</p> -->
       </router-link>
-      <router-link :to="{}" class="d-flex align-items-center routerlink"
-        ><i class="fa-solid fa-boxes-stacked"></i>
-        <!-- <p class="m-0">Magazyn</p> -->
-      </router-link>
       <router-link
         :to="{ name: 'Panel pracowniczy' }"
         class="d-flex align-items-center routerlink"
@@ -131,6 +127,7 @@ export default {
 
 .navigation {
   overflow-y: auto;
+  overflow-x: hidden;
   align-items: center;
   // padding-left: 50px;
   a {
@@ -144,8 +141,23 @@ export default {
   }
 
   .router-link-active {
+    background-color: #1b1f24;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    right: 0;
+    position: relative;
     * {
       color: #e50f33;
+    }
+    &::after {
+      content: "";
+      height: 100%;
+      width: 35px;
+      right: -35px;
+      top: 0;
+      position: absolute;
+      background-color: #1b1f24;
+      transition: all 2s ease;
     }
   }
 

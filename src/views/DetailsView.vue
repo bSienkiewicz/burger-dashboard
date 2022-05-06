@@ -83,12 +83,12 @@ export default {
     getOrderData(id) {
       Mixins.methods.showSpinner(true);
       axios
-        .get(`${this.$store.state.apiURL}/get/zamowienia/${id}`)
+        .get(`${process.env.VUE_APP_API_URL}/zamowienia/${id}`)
         .then((res) => {
           const zam = res.data.data[0];
           this.zamowienie = zam;
           console.log(zam);
-          return axios.get(`${this.$store.state.apiURL}/get/pozycje/${id}`);
+          return axios.get(`${process.env.VUE_APP_API_URL}/pozycje/${id}`);
         })
         .then((res) => {
           this.oPozycje = res.data.data;

@@ -44,9 +44,7 @@
             >
               Zaloguj
             </button>
-            <p class="mb-0 mt-1 text-red" v-if="this.error">
-              Użytkownik nie istnieje.
-            </p>
+            <p class="mb-0 mt-1 text-red" v-if="this.error">Błąd logowania.</p>
           </form>
         </div>
       </div>
@@ -81,7 +79,7 @@ export default {
       };
 
       axios
-        .post("http://localhost:3000/login", data, {
+        .post(`${process.env.VUE_APP_API_URL}/login`, data, {
           headers: headers,
         })
         .then((response) => {
@@ -96,6 +94,7 @@ export default {
           }
         })
         .catch((error) => {
+          this.error = true;
           throw error;
           // window.location.reload();
         });

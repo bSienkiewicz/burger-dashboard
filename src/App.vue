@@ -79,9 +79,11 @@ export default {
   color: white;
   border: none;
   box-shadow: 0px 5px 7px 0px #15181c;
+  text-decoration: none;
   transition: all 0.2s ease;
   &:hover {
     box-shadow: 0px 8px 15px 0px #101316;
+    color: white;
   }
 }
 

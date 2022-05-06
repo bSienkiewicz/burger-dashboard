@@ -15,7 +15,7 @@
       <h3 class="pt-3">Dodaj nową pozycję</h3>
 
       <div class="left-options p-3 bg-dblack">
-        <form action="" class="">
+        <form action="" class="" @submit.prevent="handleSubmit">
           <div class="mb-4">
             <label for="menuRodzaj" class="form-label m-0">Rodzaj</label>
             <select
@@ -93,18 +93,10 @@
             <input
               class="form-control bg-lblack text-muted"
               type="file"
-              disabled
+              @change="handleFileChange($event)"
             />
           </div>
-          <p class="m-0">
-            Składniki
-            <span
-              style="float: right"
-              v-if="this.skladnikiArr.length == 0"
-              class="text-red"
-              >Dodaj przynajmniej jeden składnik</span
-            >
-          </p>
+          <p class="m-0">Składniki</p>
           <div class="d-flex flex-wrap pt-2" id="menuSkladniki">
             <div
               v-for="skladnik in this.$store.state.podsumowanie.skladniki"
@@ -123,13 +115,7 @@
               </div>
             </div>
           </div>
-          <button
-            @click.prevent="printTable()"
-            class="bg-red px-3 py-2"
-            style="border: 0; margin-left: auto; margin-right: 0"
-          >
-            Dodaj
-          </button>
+          <button type="submit" class="button-pb px-3 py-2">Dodaj</button>
         </form>
       </div>
       <div class="right-podglad" style="">
@@ -137,9 +123,10 @@
         <recipe-bar
           :rodzaj="this.rodzaj"
           :nazwa="this.nazwa"
-          :cena="this.cena.toFixed(2)"
+          :cena="this.cena"
           :skladniki="this.skladnikiArr"
           :waga="this.waga"
+          :mini="this.previewSource"
         />
       </div>
     </div>
@@ -147,6 +134,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import ToastMessage from "@/components/ToastMessage.vue";
 import RecipeBar from "@/components/RecipeBar.vue";
 export default {
@@ -158,11 +146,12 @@ export default {
     return {
       nazwa: "Nazwa",
       rodzaj: "Burger",
-      cena: 0,
+      cena: 0.0,
       waga: 0,
       status: "W ofercie",
       skladnikiArr: [],
       completeOrder: false,
+      previewSource: "",
     };
   },
   methods: {
@@ -183,21 +172,58 @@ export default {
         this.skladnikiArr.push(id);
       } else this.skladnikiArr.push(id);
     },
-    printTable() {
-      this.nazwa = this.$refs.nazwa.value;
-      this.status = this.$refs.status.value;
-      this.rodzaj = this.$refs.rodzaj.value;
-      this.cena = this.$refs.cena.value;
-      this.waga = this.$refs.waga.value;
-
-      console.log([
-        this.nazwa,
-        this.status,
-        this.rodzaj,
-        this.cena,
-        this.waga,
-        this.skladnikiArr.join(","),
-      ]);
+    handleFileChange(e) {
+      const file = e.target.files[0];
+      this.previewFile(file);
+    },
+    previewFile(file) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = () => (this.previewSource = reader.result);
+    },
+    handleSubmit() {
+      console.log("SUBMITTED");
+      if (this.previewSource == "") return;
+      this.uploadImage(this.previewSource);
+    },
+    async uploadImage(file) {
+      let spinner = document.getElementById("SPINNER");
+      try {
+        spinner.classList.add("--shown");
+        axios
+          .post(
+            `${process.env.VUE_APP_API_URL}/image`,
+            { data: file, fname: this.nazwa.replace(/\s/g, "") },
+            {
+              headers: { "Content-Type": "application/json" },
+            }
+          )
+          .then((response) => {
+            if (response.status == 200) {
+              return axios.post(`${process.env.VUE_APP_API_URL}/menu`, {
+                nazwa: this.nazwa,
+                skladniki: this.skladnikiArr.join(","),
+                rodzaj: this.rodzaj,
+                waga: this.waga,
+                miniatura: response.data.msg,
+                cena: this.cena,
+                status: this.status,
+              });
+            }
+          })
+          .then((response) => {
+            console.log(response);
+            spinner.classList.remove("--shown");
+            spinner.classList.add("--hidden");
+            alert("Dodano pozycję do menu");
+            this.$router.push("/menu");
+            window.location.reload();
+          });
+      } catch (error) {
+        console.error(error);
+        spinner.classList.remove("--shown");
+        spinner.classList.add("--hidden");
+      }
     },
   },
 };
