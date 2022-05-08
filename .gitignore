@@ -16,6 +16,7 @@ build/Release
 node_modules/
 dist/
 jspm_packages/
+.env
 
 # Optional npm cache directory
 .npm

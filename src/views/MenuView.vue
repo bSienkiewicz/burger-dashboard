@@ -9,95 +9,130 @@
         Wynik filtrowania:
         {{ this.$store.state.podsumowanie.menu.length }} pozycji
       </p>
-      <div class="d-flex">
-        <div class="flex-grow-1"></div>
+      <div class="d-flex flex-wrap">
+        <div class="h-100 flex-grow-1" style="position: relative">
+          <div class="w-50" style="position: relative">
+            <input
+              type="text"
+              class="input-pb w-100"
+              placeholder="Sortuj"
+              v-model="sortingQuery"
+              id="sortingInput"
+            />
+            <div class="" id="shortcutTooltip" style="">
+              <div
+                class="px-2 fw-bold"
+                style="
+                  height: 100%;
+                  width: 100%;
+                  background-color: var(--dark-black);
+                  color: #afafaf;
+                  border-radius: 6px;
+                "
+              >
+                <span class="text-red">CTRL</span> +
+                <span class="text-red">X</span>
+              </div>
+            </div>
+          </div>
+        </div>
         <router-link :to="{ name: 'Dodaj Menu' }" class="button-pb" style="">
           <i class="fa-solid fa-square-plus"></i> Dodaj pozycję
         </router-link>
       </div>
 
-      <div
-        class="row mt-3 g-0 px-3"
-        style="
-          color: #b0b0b0;
-          font-weight: bold;
-          border-bottom: 1px solid #b0b0b0;
-          font-size: 0.9rem;
-        "
-      >
-        <div class="col-1">ID</div>
-        <div class="col-1">Wygląd</div>
-        <div class="col-1">Kategoria</div>
-        <div class="col-2">Nazwa</div>
-        <div class="col-4">Skład</div>
-        <div class="col-1">Cena</div>
-        <div class="col-1">Gramatura</div>
-        <div class="col-1">Opcje</div>
-      </div>
-      <div class="order-section">
-        <div v-for="item in this.$store.state.podsumowanie.menu" :key="item.id">
-          <div class="pt-3">
-            <div
-              class="row g-0 order-item px-3 d-flex align-items-center"
-              style="background: var(--dark-black)"
-            >
-              <div class="col-1">{{ item.id }}</div>
-              <div class="col-1">
-                <img
-                  loading="lazy"
-                  :src="item.miniatura"
-                  class="mini-img"
-                  alt=""
-                  width="100"
-                />
-              </div>
-              <div class="col-1">{{ item.rodzaj }}</div>
-              <div class="col-2 fw-bold">{{ item.nazwa }}</div>
-              <div class="col-4 d-flex flex-wrap align-items-center">
-                <!-- TODO: Wyrównać składniki -->
-                <p
-                  class="ser"
-                  v-for="skladnik in item.skladniki"
-                  :key="skladnik"
-                >
-                  {{ skladnik }}
-                </p>
-              </div>
-              <div class="col-1">
-                <span class="fw-bold text-red">{{ item.cena.toFixed(2) }}</span
-                >zł
-              </div>
-              <div class="col-1">{{ item.waga }}</div>
+      <div v-if="sortedItems.length > 0" class="show-items">
+        <div
+          class="row mt-3 g-0 px-3"
+          style="
+            color: #b0b0b0;
+            font-weight: bold;
+            border-bottom: 1px solid #b0b0b0;
+            font-size: 0.9rem;
+          "
+        >
+          <div class="col-1">ID</div>
+          <div class="col-1">Wygląd</div>
+          <div class="col-1">Kategoria</div>
+          <div class="col-2">Nazwa</div>
+          <div class="col-4">Skład</div>
+          <div class="col-1 text-center">Cena</div>
+          <div class="col-1 text-center">Gramatura</div>
+          <div class="col-1 text-center">Opcje</div>
+        </div>
+        <div class="order-section">
+          <div v-for="item in sortedItems" :key="item.id">
+            <div class="pt-3">
               <div
-                class="col-1 d-flex align-items-center justify-content-center"
+                class="row g-0 order-item px-3 d-flex align-items-center"
+                style="background: var(--dark-black)"
               >
-                <div class="btn-group">
-                  <button
-                    class="btn btn-secondary btn-sm dropdown-toggle"
-                    type="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
+                <div class="col-1">{{ item.id }}</div>
+                <div class="col-xxl-1 col-3">
+                  <img
+                    loading="lazy"
+                    :src="item.miniatura"
+                    class="mini-img"
+                    alt=""
+                    width="100"
+                  />
+                </div>
+                <div class="col-xxl-1 col-12">{{ item.rodzaj }}</div>
+                <div class="col-xxl-2 col-12 fw-bold">{{ item.nazwa }}</div>
+                <div
+                  class="col-xxl-4 col-12 d-flex flex-wrap align-items-center"
+                >
+                  <!-- TODO: Wyrównać składniki -->
+                  <p
+                    class="ser m-0"
+                    v-for="skladnik in item.skladniki"
+                    :key="skladnik"
                   >
-                    Opcje
-                  </button>
-                  <ul class="dropdown-menu dropdown-menu-dark">
-                    <router-link
-                      :to="{ name: 'Szczegóły', query: { id: item.id } }"
-                      class="dropdown-item"
-                      >Edytuj</router-link
+                    {{ skladnik }}
+                  </p>
+                </div>
+                <div class="col-xxl-1 col-12 text-center">
+                  <span class="fw-bold text-red">{{
+                    item.cena.toFixed(2)
+                  }}</span
+                  >zł
+                </div>
+                <div class="col-xxl-1 col-12 text-center">{{ item.waga }}g</div>
+                <div
+                  class="col-1 d-flex align-items-center justify-content-center"
+                >
+                  <div class="btn-group">
+                    <button
+                      class="btn btn-secondary btn-sm dropdown-toggle"
+                      type="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
                     >
-                    <div
-                      class="dropdown-item bg-danger"
-                      @click="sendAlert('Usuwanie wpisów wyłączone')"
-                    >
-                      Usuń
-                    </div>
-                  </ul>
+                      Opcje
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                      <router-link
+                        :to="{ name: 'Szczegóły', query: { id: item.id } }"
+                        class="dropdown-item"
+                        >Edytuj</router-link
+                      >
+                      <div
+                        class="dropdown-item bg-danger"
+                        @click="sendAlert('Usuwanie wpisów wyłączone')"
+                      >
+                        Usuń
+                      </div>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
+      <div class="pt-5 text-center" v-else>
+        <h3>Nic nie znaleziono <i class="fa-solid fa-face-frown-open"></i></h3>
+        <h5>Spróbuj zawęzić kryterium wyszukiwania</h5>
       </div>
     </div>
   </div>
@@ -109,6 +144,13 @@ import { ref } from "vue";
 export default {
   data() {
     const date = ref();
+
+    document.addEventListener("keydown", (e) => {
+      if (e.ctrlKey && e.key === "x") {
+        document.getElementById("sortingInput").focus();
+        document.getElementById("shortcutTooltip").classList.add("slide-hide");
+      }
+    });
 
     // Listener uruchamiający się przy zmianie okresu filtrowania
     const handleDate = (modelData) => {
@@ -133,6 +175,7 @@ export default {
       error: false,
       date,
       handleDate,
+      sortingQuery: "",
     };
   },
   methods: {
@@ -141,6 +184,24 @@ export default {
       if (localStorage.getItem("filteredData") === null) {
         return false;
       } else return true;
+    },
+  },
+  computed: {
+    sortedItems() {
+      let menu = this.$store.state.podsumowanie.menu;
+      if (this.sortingQuery === "") return menu;
+      else
+        return menu.filter((menuPos) => {
+          console.log(menuPos.skladniki);
+          return (
+            menuPos.rodzaj
+              .toLowerCase()
+              .includes(this.sortingQuery.toLowerCase()) ||
+            menuPos.nazwa
+              .toLowerCase()
+              .includes(this.sortingQuery.toLowerCase())
+          );
+        });
     },
   },
 };
@@ -173,5 +234,21 @@ export default {
 .order-item {
   padding-top: 20px;
   padding-bottom: 20px;
+}
+
+#shortcutTooltip {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  padding: 10px;
+  visibility: visible;
+  opacity: 1;
+  transition: all 0.2s ease;
+}
+
+.slide-hide {
+  visibility: hidden !important;
+  opacity: 0 !important;
 }
 </style>

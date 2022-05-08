@@ -66,6 +66,10 @@ const routes = [
       hideForAuth: true,
     },
   },
+  {
+    path: "/:pathMatch(.*)*",
+    component: () => import("../views/PathNotFound.vue"),
+  },
 ];
 
 const router = createRouter({
