@@ -51,19 +51,19 @@ const routes = [
     },
   },
   {
-    path: "/orderpanel",
-    name: "Panel pracowniczy",
-    component: () => import("../views/OrderView.vue"),
-    meta: {
-      requiresAuth: true,
-    },
-  },
-  {
     path: "/login",
     name: "Login",
     component: () => import("../views/LoginView.vue"),
     meta: {
       hideForAuth: true,
+    },
+  },
+  {
+    path: "/orderpanel",
+    name: "Panel pracowniczy",
+    component: () => import("../views/OrderView.vue"),
+    meta: {
+      requiresAuth: true,
     },
   },
   {

@@ -1,5 +1,8 @@
 <template>
-  <div id="sidebar-container" :show="getLocalStorageJWT()">
+  <div
+    id="sidebar-container"
+    :show="getLocalStorageJWT() && !this.$store.state.kitchenActive"
+  >
     <div class="logo d-flex justify-content-center logo-head">
       <router-link :to="{ name: 'Dashboard' }">
         <div class="d-flex justify-content-evenly align-items-center w-100">
@@ -40,21 +43,15 @@
         ><i class="fa-solid fa-utensils"></i>
         <!-- <p class="m-0">Menu</p> -->
       </router-link>
-      <router-link
-        :to="{ name: 'Panel pracowniczy' }"
+      <a
         class="d-flex align-items-center routerlink"
-        style="width: 50px; height: 50px"
-        ><i class="fa-solid fa-tv"></i>
+        style="width: 50px; height: 50px; cursor: pointer"
+        @click="promptRedirect()"
+      >
+        <i class="fa-solid fa-tv"></i>
         <!-- <p class="m-0">Order Panel</p> -->
-      </router-link>
+      </a>
       <!-- <h5 class="cat-separator">Category 3</h5> -->
-      <router-link
-        :to="{ name: 'Panel pracowniczy' }"
-        class="d-flex align-items-center routerlink"
-        style="width: 50px; height: 50px"
-        ><i class="fa-solid fa-question"></i>
-        <!-- <p class="m-0">Block</p> -->
-      </router-link>
     </div>
     <div
       class="text-start d-flex align-items-center justify-content-center p-4 logout-section"
@@ -81,6 +78,12 @@ export default {
     isMediumScreen() {
       if (this.windowWidth < 1480) return true;
       else return false;
+    },
+    promptRedirect() {
+      if (confirm("XD?")) {
+        let routeData = this.$router.resolve({ name: "Panel pracowniczy" });
+        window.open(routeData.href, "_blank");
+      }
     },
     logout() {
       this.$store.state.user = null;

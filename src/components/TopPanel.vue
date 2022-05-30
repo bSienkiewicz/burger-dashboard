@@ -2,7 +2,7 @@
   <div
     id="top-bar"
     class="px-5 py-4"
-    :show="getLocalStorageJWT()"
+    :show="getLocalStorageJWT() && !this.$store.state.kitchenActive"
     v-if="this.$store.state.user != null"
   >
     <div
@@ -152,7 +152,8 @@ export default {
       if (
         !this.update ||
         localStorage.getItem("filteredData") == null ||
-        localStorage.getItem("jwt") == null
+        localStorage.getItem("jwt") == null ||
+        this.$store.state.kitchenActive
       )
         return;
 
@@ -254,6 +255,10 @@ export default {
 
 div[show="false"] {
   top: -50px !important;
+  display: none !important;
+}
+
+.tb-hidden {
   display: none !important;
 }
 </style>

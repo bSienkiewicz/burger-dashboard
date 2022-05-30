@@ -17,8 +17,16 @@ const store = createStore({
       filterDateEnd: "",
       stats: [0, 0, [0, 0, 0, 0]],
     },
+    kitchenActive: false,
   },
-  getters: {},
+  getters: {
+    getZamowienia(state) {
+      return state.podsumowanie.zamowienia;
+    },
+    getUpdated(state) {
+      return state.updated;
+    },
+  },
   mutations: {
     setAllFresh(state, res) {
       state.podsumowanie.skladniki = res.data.skladniki;
@@ -75,6 +83,11 @@ const store = createStore({
         srIloscPozycji.toFixed(1),
         zamowienia,
       ];
+    },
+
+    setKitchenActive(state, payload) {
+      state.kitchenActive = payload;
+      console.log(state.kitchenActive);
     },
 
     setUser(state, user) {
