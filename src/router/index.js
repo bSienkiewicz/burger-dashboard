@@ -45,7 +45,15 @@ const routes = [
   {
     path: "/menu/add",
     name: "Dodaj Menu",
-    component: () => import("../views/AddMenuView.vue"),
+    component: () => import("../views/MenuAddView.vue"),
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/menu/edit",
+    name: "Edytuj Menu",
+    component: () => import("../views/MenuEditView.vue"),
     meta: {
       requiresAuth: true,
     },

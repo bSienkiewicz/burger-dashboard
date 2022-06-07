@@ -60,12 +60,18 @@
           <div class="col-1 text-center">Gramatura</div>
           <div class="col-1 text-center">Opcje</div>
         </div>
+
         <div class="order-section">
           <div v-for="item in sortedItems" :key="item.id">
             <div class="pt-3">
               <div
                 class="row g-0 order-item px-3 d-flex align-items-center"
                 style="background: var(--dark-black)"
+                :style="
+                  item.status == 'W ofercie'
+                    ? 'border-left: 4px solid green; border-radius: 10px 0 0 10px'
+                    : 'border-left: 4px solid red; border-radius: 10px 0 0 10px'
+                "
               >
                 <div class="col-1">{{ item.id }}</div>
                 <div class="col-xxl-1 col-3">
@@ -112,7 +118,7 @@
                     </button>
                     <ul class="dropdown-menu dropdown-menu-dark">
                       <router-link
-                        :to="{ name: 'Szczegóły', query: { id: item.id } }"
+                        :to="{ name: 'Edytuj Menu', query: { id: item.id } }"
                         class="dropdown-item"
                         >Edytuj</router-link
                       >

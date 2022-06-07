@@ -205,7 +205,7 @@ export default {
                 skladniki: this.skladnikiArr.join(","),
                 rodzaj: this.rodzaj,
                 waga: this.waga,
-                miniatura: response.data.msg,
+                // miniatura: response.data.msg,
                 cena: this.cena,
                 status: this.status,
               });
