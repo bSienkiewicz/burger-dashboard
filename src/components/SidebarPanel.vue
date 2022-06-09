@@ -53,6 +53,12 @@
       </a>
       <!-- <h5 class="cat-separator">Category 3</h5> -->
     </div>
+    <router-link
+      :to="{ name: 'Admin' }"
+      class="d-flex align-items-center routerlink button-pb"
+      ><i class="fa-solid fa-screwdriver-wrench"></i>
+      <!-- <p class="m-0">Menu</p> -->
+    </router-link>
     <div
       class="text-start d-flex align-items-center justify-content-center p-4 logout-section"
       @click="logout()"
@@ -80,7 +86,7 @@ export default {
       else return false;
     },
     promptRedirect() {
-      if (confirm("XD?")) {
+      if (confirm("Wciśnięcie OK otworzy panel pracowniczy")) {
         let routeData = this.$router.resolve({ name: "Panel pracowniczy" });
         window.open(routeData.href, "_blank");
       }

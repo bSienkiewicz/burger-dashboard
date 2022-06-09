@@ -75,6 +75,15 @@ const routes = [
     },
   },
   {
+    path: "/admin",
+    name: "Admin",
+    component: () => import("../views/AdminView.vue"),
+    meta: {
+      requiresAuth: true,
+      adminOnly: true,
+    },
+  },
+  {
     path: "/:pathMatch(.*)*",
     component: () => import("../views/PathNotFound.vue"),
   },
@@ -112,5 +121,4 @@ router.beforeEach((to, from, next) => {
     next();
   }
 });
-
 export default router;

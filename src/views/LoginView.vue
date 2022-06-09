@@ -4,9 +4,9 @@
       <div
         class="login-left w-50"
         :class="
-          password != '' && username != ''
+          password != '' && email != ''
             ? 'bw0'
-            : username != ''
+            : email != ''
             ? 'bw50'
             : password != ''
             ? 'bw50'
@@ -26,7 +26,7 @@
               class="input-pb"
               type="text"
               style="width: 100%"
-              v-model="username"
+              v-model="email"
             />
 
             <p class="pt-5 mb-2 fw-bold">HASŁO</p>
@@ -58,7 +58,7 @@ export default {
   data() {
     return {
       windowWidth: window.innerWidth,
-      username: "",
+      email: "",
       password: "",
       error: false,
     };
@@ -71,7 +71,7 @@ export default {
   methods: {
     authorize() {
       const data = {
-        username: this.username,
+        email: this.email,
         password: this.password,
       };
       const headers = {

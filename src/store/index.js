@@ -16,6 +16,8 @@ const store = createStore({
       filterDateStart: "",
       filterDateEnd: "",
       stats: [0, 0, [0, 0, 0, 0]],
+      role: {},
+      users: {},
     },
     kitchenActive: false,
   },
@@ -51,6 +53,11 @@ const store = createStore({
       console.log("[INFO] Zaktualizowano menu...");
       state.podsumowanie.zamowienia = res.data.zamowienia;
       console.log("[INFO] Zaktualizowano zamowienia...");
+      console.log(res.data);
+      state.podsumowanie.role = res.data.role;
+      console.log("[INFO] Zaktualizowano role...");
+      state.podsumowanie.users = res.data.users;
+      console.log("[INFO] Zaktualizowano users...");
     },
 
     setUpdated(state) {

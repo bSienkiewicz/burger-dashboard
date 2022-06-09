@@ -62,11 +62,12 @@ export default {
 
 .input-pb {
   padding: 10px;
-  background: #2f343b;
+  background: #2f343b !important;
   outline: none;
-  border: none;
-  color: white;
-  border-radius: 5px;
+  border: none !important;
+  border-bottom: 1px #2f343b solid !important;
+  color: white !important;
+  border-radius: 0px !important;
   box-shadow: 0px 5px 7px 0px #15181c;
 }
 
@@ -75,15 +76,16 @@ export default {
   padding-right: 25px;
   padding-top: 10px;
   padding-bottom: 10px;
-  background: var(--basic-red);
-  color: white;
-  border: none;
+  background: var(--basic-red) !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 0px !important;
   box-shadow: 0px 5px 7px 0px #15181c;
-  text-decoration: none;
-  transition: all 0.2s ease;
+  text-decoration: none !important;
+  transition: all 0.2s ease !important;
   &:hover {
-    box-shadow: 0px 8px 15px 0px #101316;
-    color: white;
+    box-shadow: 0px 8px 15px 0px #101316 !important;
+    color: white !important;
   }
 }
 
