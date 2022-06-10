@@ -172,12 +172,12 @@
           <div class="right-podglad" style="">
             <h5 class="ps-4">Podgląd</h5>
             <recipe-bar
-                :rodzaj="this.rodzaj"
-                :nazwa="this.nazwa"
-                :cena="this.cena"
-                :skladniki="this.skladnikiArr"
-                :waga="this.waga"
-                :mini="this.previewSource"
+              :rodzaj="this.rodzaj"
+              :nazwa="this.nazwa"
+              :cena="this.cena"
+              :skladniki="this.skladnikiArr"
+              :waga="this.waga"
+              :mini="this.previewSource"
             />
           </div>
         </div>
@@ -189,7 +189,6 @@
 <script>
 import Mixins from "@/Mixins";
 import RecipeBar from "@/components/RecipeBar.vue";
-
 
 import axios from "axios";
 export default {
@@ -224,6 +223,7 @@ export default {
       let n = this.menu.nazwa;
       return [n];
     },
+
     getOrderData(id) {
       this.updating = true;
       Mixins.methods.showSpinner(true);
@@ -242,6 +242,7 @@ export default {
           this.waga = this.menu.waga;
           this.cena = this.menu.cena;
           this.status = this.menu.status;
+          this.previewSource = this.menu.miniatura;
           let a = this.menu.skladniki.split(",");
           this.skladnikiArr = a.map(function (x) {
             return parseInt(x, 10);
@@ -352,11 +353,11 @@ select:disabled {
   position: fixed;
   right: 100px;
   top: 100px;
-@media only screen and (max-width: 1480px) {
-  position: relative;
-  right: 0px;
-  top: 0px;
-  padding-top: 20px;
-}
+  @media only screen and (max-width: 1480px) {
+    position: relative;
+    right: 0px;
+    top: 0px;
+    padding-top: 20px;
+  }
 }
 </style>

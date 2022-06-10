@@ -11,10 +11,14 @@
       "
     >
       <h1 class="m-0 titleUni text-red">Admin</h1>
-      <div class="row mt-5 g-0">
-        <div class="col-6 p-4 me-3" style="background: var(--dark-black)">
+      <div class="row mt-5 g-0" style="overflow: hidden">
+        <div
+          class="col-6 p-4 me-3"
+          style="background: var(--dark-black); position: relative"
+        >
           <h4>
             Pracownicy
+
             <span style="float: right"
               ><button
                 class="button-pb"
@@ -25,6 +29,46 @@
               </button></span
             >
           </h4>
+          <div
+            class="text-red legend-show"
+            style="font-size: 1rem; position: absolute; top: 5px; left: 5px"
+          >
+            <i class="fa-solid fa-circle-question"></i>
+          </div>
+          <div class="d-flex flex-row legenda">
+            <div
+              class="p-2 me-3"
+              style="
+                font-size: 0.8rem;
+                background: var(--light-black);
+                color: white;
+              "
+            >
+              Pracownik aktywny
+            </div>
+            <div
+              class="p-2 me-3"
+              style="
+                font-size: 0.8rem;
+                background: var(--light-black);
+                color: grey;
+                border-left: 1px dashed var(--basic-red);
+              "
+            >
+              Pracownik nieaktywny
+            </div>
+            <div
+              class="p-2"
+              style="
+                font-size: 0.8rem;
+                background: var(--light-black);
+                color: grey;
+                border-left: 1px dashed yellow;
+              "
+            >
+              Oczekiwanie na zmianę hasła
+            </div>
+          </div>
           <div
             class="row mt-3 g-0 px-3"
             style="
@@ -465,5 +509,18 @@ export default {
 .user-row:hover {
   opacity: 1 !important;
   transition: all 0.3s ease;
+}
+
+.legenda {
+  transform: translateX(-100%);
+  transition: all 0.3s ease;
+}
+
+.legend-show:hover {
+  cursor: help;
+}
+
+.legend-show:hover + .legenda {
+  transform: translateX(0);
 }
 </style>
