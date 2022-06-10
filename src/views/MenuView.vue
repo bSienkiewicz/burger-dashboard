@@ -70,7 +70,8 @@
                 :style="
                   item.status == 'W ofercie'
                     ? 'border-left: 4px solid green; border-radius: 10px 0 0 10px'
-                    : 'border-left: 4px solid red; border-radius: 10px 0 0 10px'
+                    : item.status == 'Promocja' ? 'border-left: 4px solid #f23103; border-radius: 10px 0 0 10px'
+                    : 'border-left: 4px solid red; border-radius: 10px 0 0 10px;filter: grayscale(100%);'
                 "
               >
                 <div class="col-1">{{ item.id }}</div>
@@ -146,6 +147,8 @@
 
 <script>
 import { ref } from "vue";
+
+
 
 export default {
   data() {
