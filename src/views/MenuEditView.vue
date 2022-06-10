@@ -138,7 +138,6 @@
                 <input
                   class="form-control bg-lblack text-muted"
                   type="file"
-                  disabled
                   @change="handleFileChange($event)"
                 />
               </div>
@@ -170,6 +169,17 @@
               </button>
             </form>
           </div>
+          <div class="right-podglad" style="">
+            <h5 class="ps-4">Podgląd</h5>
+            <recipe-bar
+                :rodzaj="this.rodzaj"
+                :nazwa="this.nazwa"
+                :cena="this.cena"
+                :skladniki="this.skladnikiArr"
+                :waga="this.waga"
+                :mini="this.previewSource"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -178,9 +188,14 @@
 
 <script>
 import Mixins from "@/Mixins";
+import RecipeBar from "@/components/RecipeBar.vue";
+
 
 import axios from "axios";
 export default {
+  components: {
+    RecipeBar,
+  },
   mixins: [Mixins],
   data() {
     return {
@@ -331,5 +346,17 @@ export default {
 
 select:disabled {
   color: rgb(101, 101, 101) !important;
+}
+
+.right-podglad {
+  position: fixed;
+  right: 100px;
+  top: 100px;
+@media only screen and (max-width: 1480px) {
+  position: relative;
+  right: 0px;
+  top: 0px;
+  padding-top: 20px;
+}
 }
 </style>
