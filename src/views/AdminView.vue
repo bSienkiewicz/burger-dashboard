@@ -46,9 +46,11 @@
               class="row g-0 p-3 my-3 user-row"
               style="background: var(--light-black); font-size: 0.9rem"
               :style="
-                user.is_active == 1
-                  ? ''
-                  : 'color:grey; border-left: 1px dashed red;'
+                user.is_active == 0
+                  ? 'color:grey; border-left: 1px dashed red;'
+                  : user.is_active == 2
+                  ? 'color:grey; border-left: 1px dashed yellow;'
+                  : ''
               "
             >
               <div class="col-1 d-flex align-items-center">
@@ -90,7 +92,13 @@
                       >
                     </li>
                     <li>
-                      <a class="dropdown-item" href="#">Resetuj hasło</a>
+                      <a
+                        class="dropdown-item"
+                        href="#"
+                        v-if="user.is_active != 2"
+                        @click="resetUserPassword(user.user_id, 2)"
+                        >Resetuj hasło</a
+                      >
                     </li>
                     <li><hr class="dropdown-divider" /></li>
                     <li>
@@ -121,7 +129,14 @@
           style="background: var(--dark-black)"
           v-if="this.settings === 'editUser'"
         >
-          <h4>Edytuj pracownika</h4>
+          <h4>
+            Edytuj pracownika
+            <span
+              style="float: right; color: var(--basic-red); cursor: pointer"
+              @click="endEditingUser()"
+              ><i class="fa-solid fa-xmark"></i
+            ></span>
+          </h4>
           <form action="">
             <label for="imie" class="pt-2">Imię</label>
             <input
@@ -153,12 +168,14 @@
               class="form-select input-pb shadow-none"
               id="rola"
               v-model="editUser.rola"
+              @change="checkIfAdmin()"
             >
               <option
                 v-for="rola in this.$store.state.podsumowanie.role"
                 :key="rola.id"
                 :value="rola.id"
                 :selected="rola.id == editUser.rola"
+                :style="rola.nazwa === 'Admin' ? 'color: red' : ''"
               >
                 {{ rola.nazwa }}
               </option>
@@ -177,7 +194,14 @@
           style="background: var(--dark-black)"
           v-if="this.settings === 'addUser'"
         >
-          <h4>Dodaj pracownika</h4>
+          <h4>
+            Dodaj pracownika
+            <span
+              style="float: right; color: var(--basic-red); cursor: pointer"
+              @click="endAddingUser()"
+              ><i class="fa-solid fa-xmark"></i
+            ></span>
+          </h4>
           <form action="">
             <label for="imie" class="pt-2">Imię</label>
             <input
@@ -225,7 +249,7 @@
               type="button"
               @click="submitUserAdd()"
             >
-              EDYTUJ
+              DODAJ
             </button>
           </form>
         </div>
@@ -259,7 +283,7 @@ export default {
         haslo: "",
         email: "",
         rola: "",
-        is_active: 1,
+        is_active: 2,
         created_by: this.$store.state.user.user_id,
         created_date: "",
       },
@@ -384,6 +408,28 @@ export default {
           Mixins.methods.showSpinner(false);
         });
     },
+    resetUserPassword(id, is_active) {
+      Mixins.methods.showSpinner(true);
+      const headers = {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      };
+      axios
+        .put(
+          `${process.env.VUE_APP_API_URL}/users/activate/${id}`,
+          { is_active: is_active },
+          { headers: headers }
+        )
+        .then((res) => {
+          this.getUsers();
+          console.log(res);
+          Mixins.methods.showSpinner(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          Mixins.methods.showSpinner(false);
+        });
+    },
     checkIfAdmin() {
       console.log(this.addUser);
       if (this.addUser.rola === "Admin") {
@@ -401,7 +447,6 @@ export default {
   },
   mounted() {
     this.getUsers();
-    console.log(this.$store.state.user.user_id);
   },
 };
 </script>

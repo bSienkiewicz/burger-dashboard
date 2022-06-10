@@ -60,6 +60,10 @@ export default {
   --light-black: #1d1f24;
 }
 
+a:link {
+  text-decoration: none !important;
+}
+
 .input-pb {
   padding: 10px;
   background: #2f343b !important;

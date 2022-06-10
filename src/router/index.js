@@ -59,6 +59,14 @@ const routes = [
     },
   },
   {
+    path: "/settings",
+    name: "Ustawienia",
+    component: () => import("../views/SettingsView.vue"),
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
     path: "/login",
     name: "Login",
     component: () => import("../views/LoginView.vue"),
@@ -96,6 +104,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   document.title = to.name + " | PBDash";
+  console.log();
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     // this route requires auth, check if logged in
     // if not, redirect to login page.
@@ -108,7 +117,8 @@ router.beforeEach((to, from, next) => {
     } else {
       next(); // go to wherever I'm going
     }
-  } else if (to.matched.some((record) => record.meta.hideForAuth)) {
+  }
+  if (to.matched.some((record) => record.meta.hideForAuth)) {
     if (
       localStorage.getItem("jwt") != null ||
       localStorage.getItem("jwt") != undefined
@@ -117,8 +127,15 @@ router.beforeEach((to, from, next) => {
     } else {
       next();
     }
-  } else {
-    next();
   }
+  // if (to.matched.some((record) => record.meta.adminOnly)) {
+  //   if (JSON.parse(localStorage.getItem("user")).rola == "Admin") {
+  //     next();
+  //   } else {
+  //     console.log("nie jest adminem");
+  //     next({ name: "Dashboard" });
+  //   }
+  // }
 });
+
 export default router;

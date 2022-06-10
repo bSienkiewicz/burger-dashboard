@@ -9,19 +9,29 @@
       class="d-flex align-items-center justify-content-start row w-100"
       v-if="this.update"
     >
-      <div class="col d-flex align-items-center">
+      <router-link
+        :to="{ name: 'Ustawienia' }"
+        class="col d-flex align-items-center"
+      >
         <div class="me-3" :style="styles"></div>
-        <p class="m-0 fw-bold">
+        <p
+          class="m-0 fw-bold"
+          style="text-decoration: none !important; color: white"
+        >
           {{ this.$store.state.user.imie }}
           {{ this.$store.state.user.nazwisko }}
         </p>
         <div
           class="fw-bold py-1 px-3 ms-3 text-uppercase"
-          style="background-color: var(--basic-red)"
+          style="
+            background-color: var(--basic-red);
+            text-decoration: none !important;
+            color: white;
+          "
         >
           {{ this.$store.state.user.rola }}
         </div>
-      </div>
+      </router-link>
       <div class="col-xl-3 col-md-6">
         <Datepicker
           v-model="date"
