@@ -1,4 +1,4 @@
-# Burger Kiosk
+# Burger Dashboard
 Burger Dashboard is a web-based dashboard developed as the second part of the "Project Burger" university initiative. This Vue.js application provides restaurant owners with a user-friendly interface to manage various aspects of their establishment, including setting up the restaurant menu, managing workers, monitoring orders and managing restaurant's income. The dashboard communicated with a backend server to interact with the database, forming an integral part of the restaurant management system.
 
 # Features
